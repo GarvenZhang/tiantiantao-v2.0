@@ -5,7 +5,7 @@ module.exports = app => {
   app.get('/v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:min&max=:max', GoodsController.get)
   app.post('/v1/goods', GoodsController.post)
   app.delete('/v1/goods/:id', GoodsController.delete)
-  app.put('/v1/goods/:id', GoodsController.put)
+  app.put('/v1/goods', GoodsController.put)
   app.post('/v1/goods/img', GoodsController.addImg)
   // 类别模块
 

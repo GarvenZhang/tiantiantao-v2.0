@@ -1,4 +1,5 @@
 const path = require('path')
+const baseTips = require('../middlewares/baseTips')
 let Cache = require('../middlewares/cache')
 let mysqlModule = require('../middlewares/mysqlModule')
 let fsModule = require('../middlewares/fsModule')
@@ -15,6 +16,7 @@ exports.add = async postData => {
     })
     .catch(error => {
       console.log(`添加商品error：${error}`)
+      Cache.setModel('tmpModel', baseTips['082'])
     })
 }
 
@@ -24,7 +26,7 @@ exports.add = async postData => {
 exports.get = async postData => {
   let sql = `
     SELECT idGoods, Goods.name, description, price, bigImgSrc, date,
-      (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods) AS smImg
+      CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg
     FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory
   `
   // 根据id查商品
@@ -40,7 +42,7 @@ exports.get = async postData => {
   // 只根据名称查询
   } else if (postData.name && !postData.min) {
     sql = `
-      ${sql} AND WHERE Goods.name = ${postData.name}
+      ${sql} AND Goods.name = ${postData.name}
       LIMIT ${postData.start}, ${postData.offset}
     `
   // 根据名称和价格范围来查询
@@ -57,6 +59,7 @@ exports.get = async postData => {
     })
     .catch(error => {
       console.log(`查询商品出错：${error}`)
+      Cache.setModel('tmpModel', baseTips['082'])
     })
 }
 
@@ -71,6 +74,7 @@ exports.delete = async postData => {
     })
     .catch(error => {
       console.log(`删除商品出错：${error}`)
+      Cache.setModel('tmpModel', baseTips['082'])
     })
 }
 
@@ -78,12 +82,15 @@ exports.delete = async postData => {
  * 修改商品
  */
 exports.put = async postData => {
-  await mysqlModule.queryConnection(`UPDATE Goods SET name = ?, description = ?, price = ?, Category_idCategory = ?`, [postData.name, postData.description, postData.price, postData.categoryId])
+  await mysqlModule.queryConnection(`UPDATE Goods SET name = ?, description = ?, price = ?, Category_idCategory = ? WHERE idGoods = ?`,
+    [postData.name, postData.description, postData.price, postData.categoryId, postData.id]
+  )
     .then(async result => {
       await Cache.checkDefaultModel('goodsModel')
     })
     .catch(error => {
       console.log(`修改商品出错：${error}`)
+      Cache.setModel('tmpModel', baseTips['082'])
     })
 }
 
@@ -108,6 +115,7 @@ exports.addImg = async postData => {
       })
       .catch(error => {
         console.log(`存放大图src错误：${error}`)
+        Cache.setModel('tmpModel', baseTips['082'])
       })
   } else if (type === 'bigImg') {
     await mysqlModule.queryConnection(`UPDATE Goods SET bigImgSrc = ? WHERE id = ?`, [filename, id])
@@ -116,6 +124,7 @@ exports.addImg = async postData => {
       })
       .catch(error => {
         console.log(`存放小图src错误：${error}`)
+        Cache.setModel('tmpModel', baseTips['082'])
       })
   }
 }

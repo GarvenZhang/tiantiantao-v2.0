@@ -18,7 +18,8 @@ module.exports = {
     'smImgSrcModel': 'SmImgSrc',
     'shoppingCartModel': 'ShoppingCart',
     'orderFormModel': 'OrderForm',
-    'tmpModel': ''  // get请求用
+    'tmpModel': '',  // get请求用
+    'errorModel': ''
   },
   modelDataMinNum: 16
 }

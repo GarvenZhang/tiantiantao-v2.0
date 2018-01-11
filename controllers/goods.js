@@ -42,7 +42,7 @@ exports.post = async ctx => {
     goodsModel.add(postData)
   }
   // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  ctx.resbody = Cache.getModel('tmpModel')
 }
 
 /**
@@ -100,7 +100,7 @@ exports.delete = async ctx => {
   // model
   await goodsModel.delete({id})
   // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  ctx.resbody = Cache.getModel('tmpModel')
 }
 
 /**
@@ -108,6 +108,7 @@ exports.delete = async ctx => {
  */
 exports.put = async ctx => {
   let postData = ctx.reqbody
+  console.log(postData)
   // 检验
   let ret = Formvalidate([{
     value: postData.name,
@@ -122,7 +123,7 @@ exports.put = async ctx => {
     type: ['notNull'],
     code: ['16']
   }, {
-    value: postData.category_id,
+    value: postData.categoryId,
     type: ['notNull'],
     code: ['16']
   }])
@@ -132,6 +133,8 @@ exports.put = async ctx => {
   }
   // model
   goodsModel.put(postData)
+  // res
+  ctx.resbody = Cache.getModel('tmpModel')
 }
 
 /**
@@ -142,5 +145,5 @@ exports.addImg = async ctx => {
   // model
   await goodsModel.addImg(postData)
   // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  ctx.resbody = Cache.getModel('tmpModel')
 }

@@ -32,9 +32,10 @@ module.exports = {
     const pageMinNum = this.dataMinNum
     // 存在但不到一页，则增加model中的data
     if (this.getModel(modelName).data.length <= pageMinNum) {
-      await mysqlModule.queryConnection(`SELECT * FROM ${tableName}`)
+      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
+          this.setModel('tmpModel', this.getModel(modelName))
         })
     }
   },
@@ -51,9 +52,10 @@ module.exports = {
     const isChanged = this.getModel(modelName).data.some(item => item.id === id)
     if (isChanged) {
       // 更新
-      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} TOP ${pageMinNum}`)
+      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
+          this.setModel('tmpModel', this.getModel(modelName))
         })
     }
   },
