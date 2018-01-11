@@ -15,7 +15,6 @@
 ```
 {
   "status": "success"
-  "length": 2,
   "data": [
     {
       "id": 1,

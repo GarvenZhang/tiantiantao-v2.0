@@ -96,7 +96,29 @@ exports.delete = async ctx => {
  * 修改商品
  */
 exports.put = async ctx => {
-
+  let postData = ctx.reqbody
+  // 检验
+  let ret = Formvalidate([{
+    value: postData.name,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.description,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.price,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.category_id,
+    type: ['notNull'],
+    code: ['16']
+  }])
+  if (typeof ret === 'object') {
+    Object.assign(ctx.resbody, ret)
+    return
+  }
 }
 
 /**
