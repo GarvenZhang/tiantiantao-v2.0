@@ -5,7 +5,7 @@
 |:------|:---------|:--------|
 |/v1/goods   |POST   |添加新商品  |
 |/v1/goods/:id   |DELETE     |删除商品  |
-|/v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:min&max=:max    |GET    |查询商品   |
+|/v1/goods/:param?nextPage=:nextPage&perPage=:perPage&min=:min&max=:max    |GET    |查询商品   |
 |/v1/goods/:id    |PUT    |修改商品   |
 |/v1/goods/img    |POST    |图片上传   |
 ---
@@ -75,7 +75,7 @@ POST /v1/goods
 |description   |商品描述   |必传  |
 |date   |上传日期   |必传  |
 |price   |商品价格   |必传, 精确到2位数  |
-|category_id   |类别id   |必传，Number  |
+|categoryId   |类别id   |必传，Number  |
 ---
 
 `返回`
@@ -95,7 +95,7 @@ DELETE /v1/goods/:id
 ## 查询商品
 
 ```
-GET /v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:min&max=:max
+GET /v1/goods/:param?nextPage=:nextPage&perPage=:perPage&min=:min&max=:max
 ```
 
 `请求参数`
@@ -103,15 +103,26 @@ GET /v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:mi
 ---
 |参数    |含义   |备注     |
 |:------|:---------|:--------|
-|name   |商品名称   |必传, 当id为all则查全部，为数字则查具体商品, 当id为all_category则为查某种类型   |
+|param   |商品名称   |必传 |
 |min   |价格下限   |必传  |
 |max   |价格上限   |必传  |
-|curPage   |当前页数码   |可选  |
 |nextPage   |下一页数码   |可选  |
 |perPage   |每一页商品数   |可选  |
 ---
 
-*若min为1， max为1，则为不进行区间查询*
+`参数说明`
+
+url必须完整，但是针对特定的情况只需修改特定的参数即可
+
+`param`为`all`时不分类查询
+
+`param`为`id_num`时为根据某个id查询商品详情, 如`/v1/goods/id_21432432?nextPage=1&perPage=16&min=0&max=0`
+
+`param`为`type_num`时为查询某类商品，如`/v1/goods/type_12?nextPage=1&perPage=16&min=0&max=0`
+
+`param`为商品名称时为根据名称查询商品, 如`/v1/goods/javascript高级程序设计?nextPage=1&perPage=16&min=0&max=0`
+
+`min`和`max`都为0时为不需要根据价格查询
 
 `返回`
 
@@ -122,7 +133,7 @@ GET /v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:mi
 ## 修改商品
 
 ```
-PUT /v1/goods/:id
+PUT /v1/goods
 ```
 
 `请求参数`
@@ -134,9 +145,7 @@ PUT /v1/goods/:id
 |name   |商品名称   |必传  |
 |description   |商品描述   |必选  |
 |price   |商品价格   |必传  |
-|category_id   |类别   |必传  |
-|bigImg   |大图src   |可选  |
-|smImg   |小图src数组   |可选  |
+|categoryId   |类别   |必传  |
 ---
 
 `返回`

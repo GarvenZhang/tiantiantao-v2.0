@@ -8,7 +8,7 @@ let fsModule = require('../middlewares/fsModule')
  */
 exports.add = async postData => {
   await mysqlModule.queryConnection('INSERT INTO Goods(name, description, price, date, Category_idCategory) VALUES(?, ?, ?, ?, ?)', [
-    postData.name, postData.description, postData.price, postData.date, postData.Category_idCategory
+    postData.name, postData.description, postData.price, postData.date, postData.categoryId
   ])
     .then(async result => {
       await Cache.setDefaultModel('goodsModel')
@@ -27,21 +27,29 @@ exports.get = async postData => {
       (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods) AS smImg
     FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory
   `
+  // 根据id查商品
+  if (postData.id) {
+    sql = `
+      ${sql} AND idGoods = ${postData.id}
+    `
+  // 根据商品类别查询
+  } else if (postData.categoryId) {
+    sql = `
+      ${sql} AND Goods.Category_idCategory = ${postData.categoryId}
+    `
   // 只根据名称查询
-  if (postData.name && !postData.min) {
+  } else if (postData.name && !postData.min) {
     sql = `
       ${sql} AND WHERE Goods.name = ${postData.name}
+      LIMIT ${postData.start}, ${postData.offset}
     `
   // 根据名称和价格范围来查询
   } else if (postData.name && postData.min) {
     sql = `
-      ${sql} AND Goods.name = ${postData.name} AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max} 
+      ${sql} AND Goods.name = ${postData.name} AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
+      LIMIT ${postData.start}, ${postData.offset}
     `
   }
-  // 分页
-  sql = `
-    ${sql} LIMIT ${postData.start}, ${postData.offset}
-  `
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
@@ -70,7 +78,13 @@ exports.delete = async postData => {
  * 修改商品
  */
 exports.put = async postData => {
-
+  await mysqlModule.queryConnection(`UPDATE Goods SET name = ?, description = ?, price = ?, Category_idCategory = ?`, [postData.name, postData.description, postData.price, postData.categoryId])
+    .then(async result => {
+      await Cache.checkDefaultModel('goodsModel')
+    })
+    .catch(error => {
+      console.log(`修改商品出错：${error}`)
+    })
 }
 
 /**

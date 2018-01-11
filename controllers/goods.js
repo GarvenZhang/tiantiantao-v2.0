@@ -23,7 +23,7 @@ exports.post = async ctx => {
     type: ['notNull'],
     code: ['16']
   }, {
-    value: postData.category_id,
+    value: postData.categoryId,
     type: ['notNull'],
     code: ['16']
   }, {
@@ -51,7 +51,6 @@ exports.post = async ctx => {
 exports.get = async ctx => {
   const aUrlParam = ctx.aUrlParam
   const name = aUrlParam[0]
-  const curPage = aUrlParam[1]
   const nextPage = aUrlParam[2]
   const perPage = aUrlParam[3]
   const min = aUrlParam[4]
@@ -61,8 +60,20 @@ exports.get = async ctx => {
   const start = nextPage * perPage - perPage
   const offset = perPage
 
+  // 具体商品
+  if (name.indexOf('id_') === 0) {
+    let id = /^id_(\d)+?$/.exec(name)[1]
+    await goodsModel.get({
+      id
+    })
+  // 根据类别查询商品
+  } else if (name.indexOf('type_') === 0) {
+    let categoryId = /^type_(\d)+?$/.exec(name)[1]
+    await goodsModel.get({
+      categoryId, start, offset
+    })
   // 管理员
-  if (name === 'all') {
+  } else if (name === 'all') {
     await goodsModel.get({
       start, offset
     })
@@ -119,6 +130,8 @@ exports.put = async ctx => {
     Object.assign(ctx.resbody, ret)
     return
   }
+  // model
+  goodsModel.put(postData)
 }
 
 /**
