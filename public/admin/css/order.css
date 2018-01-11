@@ -1,0 +1,11 @@
+.order-item {
+    display: flex;
+    margin: 10px 0;
+}
+.order-item .order-ti{
+    width: 100px;
+    font: bolder 16px/2 '';
+}
+.order-item .order-val {
+    font: 16px/2 '';
+}

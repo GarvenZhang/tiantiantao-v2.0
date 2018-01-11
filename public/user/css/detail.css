@@ -1,0 +1,53 @@
+.main {
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    background: white;
+}
+.main .detail-img-wrapper {
+    padding: 0 20px;
+    float: left;
+    background: white;
+}
+.detail-img-wrapper .img {
+    width: 350px;
+    display: inline-block;
+}
+.main .detail-content {
+    float: left;
+    padding: 10px 50px 50px;
+    width: 500px;
+    background: #f5f5f5;
+}
+.detail-content .hd-tt {
+    font: bolder 24px/3 '';
+}
+.detail-content .content-des {
+    width: 90%;
+    font: 16px/1.5 '';
+    margin-bottom: 20px;
+}
+.detail-content .wrapper-inner {
+    float: left;
+    font: 16px/1.5 '';
+}
+.detail-content .wrapper-inner:first-child {
+    margin-right: 10px;
+}
+.detail-content .wrapper-inner .btn {
+    margin: 0 10px;
+}
+.detail-content .wrapper-inner .num {
+    text-align: center;
+    width: 30px;
+}
+.detail-content .shopBtn {
+    font: 26px/1.5 '';
+    padding: 5px 15px;
+    margin-left: 300px;
+    margin-top: 40px;
+    color: white;
+    background: orangered;
+    border: 1px solid #f5f5f5;
+    border-radius: 10px;
+}

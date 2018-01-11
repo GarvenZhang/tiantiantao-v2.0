@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选课系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 触发模态弹框的按钮 -->
+<!-- 必须有data-target属性，而且其值必须是 # + 模态弹框的id值 -->
+<button type="button" id="btn" data-target="#modal">模态框</button>
+<!-- 触发模态弹框的按钮 结束-->
+
+<!-- 模态弹框 -->
+<div class="modal hide" id="modal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">修改课程</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <p>你好呀！！</p>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn">确定</button>
+            <button type="button" class="btn">取消</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+<!-- 模态弹框 结束-->
+<script src="modal.js"></script>
+<script>
+    modal({
+      modal: document.getElementById('modal'),
+      target: document.getElementById('btn'),
+      draggable: true
+    })
+</script>
+</body>
+</html>
