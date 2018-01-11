@@ -35,7 +35,7 @@ module.exports = {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
-          this.setModel('tmpModel', this.getModel(modelName))
+          this.setModel('tmpModel', this.getModel(result))
         })
     }
   },
@@ -55,7 +55,7 @@ module.exports = {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
-          this.setModel('tmpModel', this.getModel(modelName))
+          this.setModel('tmpModel', this.getModel(result))
         })
     }
   },

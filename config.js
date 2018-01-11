@@ -19,7 +19,7 @@ module.exports = {
     'shoppingCartModel': 'ShoppingCart',
     'orderFormModel': 'OrderForm',
     'tmpModel': '',  // get请求用
-    'errorModel': ''
+    'errorModel': ''  // 错误信息的模型
   },
   modelDataMinNum: 16
 }

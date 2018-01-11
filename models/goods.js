@@ -70,7 +70,7 @@ exports.delete = async postData => {
   const id = postData.id
   await mysqlModule.queryConnection(`DELETE FROM Goods WHERE idGoods = ?`, [id])
     .then(async result => {
-      await Cache.checkDefaultModel('goodsModel')
+      await Cache.checkDefaultModel('goodsModel', id)
     })
     .catch(error => {
       console.log(`删除商品出错：${error}`)
@@ -86,7 +86,7 @@ exports.put = async postData => {
     [postData.name, postData.description, postData.price, postData.categoryId, postData.id]
   )
     .then(async result => {
-      await Cache.checkDefaultModel('goodsModel')
+      await Cache.checkDefaultModel('goodsModel', postData.id)
     })
     .catch(error => {
       console.log(`修改商品出错：${error}`)
@@ -111,7 +111,7 @@ exports.addImg = async postData => {
   if (type === 'smImg') {
     await mysqlModule.queryConnection(`INSERT INTO SmImgSrc(src, Goods_idGoods) VALUES(?, ?)`, [filename, id])
       .then(async result => {
-        await Cache.checkDefaultModel('goodsModel')
+        await Cache.checkDefaultModel('goodsModel', id)
       })
       .catch(error => {
         console.log(`存放大图src错误：${error}`)
@@ -120,7 +120,7 @@ exports.addImg = async postData => {
   } else if (type === 'bigImg') {
     await mysqlModule.queryConnection(`UPDATE Goods SET bigImgSrc = ? WHERE id = ?`, [filename, id])
       .then(async result => {
-        await Cache.checkDefaultModel('goodsModel')
+        await Cache.checkDefaultModel('goodsModel', id)
       })
       .catch(error => {
         console.log(`存放小图src错误：${error}`)
