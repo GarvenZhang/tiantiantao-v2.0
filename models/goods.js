@@ -25,7 +25,7 @@ exports.add = async postData => {
  */
 exports.get = async postData => {
   let sql = `
-    SELECT idGoods, Goods.name, description, price, bigImgSrc, date,
+    SELECT idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category,
       CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg
     FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory
   `

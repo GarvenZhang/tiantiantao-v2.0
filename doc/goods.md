@@ -42,7 +42,7 @@
 ## 单个商品信息 Goods
 
 ```
-{
+[{
   "status": "success"
   "id": 1,
   "name": "shoes",
@@ -57,7 +57,7 @@
       "src": "http://www.baidu.com/n.png"
     }
   ]
-}
+}]
 ```
 
 ## 添加新商品
