@@ -50,7 +50,7 @@ let mysqlModule = {
         console.log(err)
         // sql语法错误／执行时错误
         if (err) {
-          reject(err)
+          reject(`sql语法错误／执行时错误: ${err}`)
         } else {
           // 查询
           if (sql.indexOf('SELECT') === 0) {
@@ -68,7 +68,7 @@ let mysqlModule = {
               resolve(result.insertId)
             // 操作失败
             } else {
-              reject('单一sql语句的增／删／改 - 操作失败！')
+              reject(`单一sql语句的增／删／改 - 操作失败！${err}`)
             }
           // 多sql情况
           } else if (Array.isArray(result)) {
@@ -81,20 +81,20 @@ let mysqlModule = {
                   return
                 }
               }
-              reject('多表插入失败！')
+              reject(`多表插入失败！${err}`)
             // 多表删除
             } else if (sql.indexOf('DELETE') === 0) {
               if (result.some(item => item.affectedRows > 0)) {
                 resolve(true)
               } else {
-                reject('多表删除失败！')
+                reject(`多表删除失败！${err}`)
               }
               // 多表更新
             } else if (sql.indexOf('UPDATE') === 0) {
               if (result.some(item => item.affectedRows > 0)) {
                 resolve(true)
               } else {
-                reject('多表更新失败！')
+                reject(`多表更新失败！${err}`)
               }
             }
           }

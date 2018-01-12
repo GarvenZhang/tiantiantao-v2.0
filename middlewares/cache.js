@@ -6,6 +6,7 @@ module.exports = {
   relation: {}, // 映射关系,
   mysqlModule: null,  // mysql模块
   dataMinNum: 16, // 最小数据量
+  baseModel: null,  // 基础模型
   /**
    * 设置model
    * @param {String} modelName 模型名称
@@ -35,7 +36,6 @@ module.exports = {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
-          this.setModel('tmpModel', this.getModel(result))
         })
     }
   },
@@ -55,9 +55,17 @@ module.exports = {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
-          this.setModel('tmpModel', this.getModel(result))
         })
     }
+  },
+  /**
+   * 附上baseModel
+   * @param {Object} ret 查询结果
+   */
+  addBaseModel (ret) {
+    let _baseModel = JSON.parse(JSON.stringify(this.baseModel))
+    _baseModel.data = ret
+    return _baseModel
   },
   /**
    * 清理缓存
@@ -76,6 +84,7 @@ module.exports = {
     // 设置模型与表关系
     this.relation = modelRelationWithTable
     // 设置baseModel
+    this.baseModel = baseModel
     for (var attr in modelRelationWithTable) {
       this.data[attr] = baseModel
     }

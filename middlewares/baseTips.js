@@ -153,8 +153,14 @@ module.exports = {
   },
   '16': {
     'status': 'failed',
-    'retCode': '016',
+    'retCode': '16',
     'message': '**不能为空！', // ** 可替换
     'statusCode': 400
+  },
+  '500': {
+    'status': 'failed',
+    'retCode': '500',
+    'message': '服务器内部错误！',
+    'statusCode': 500
   }
 }

@@ -14,11 +14,18 @@ const bodyParser = function (req, res, dirname) {
   ctx.headers = req.headers
   ctx.url = url.parse(decodeURI(req.url))
   ctx.reqbody = {}
+  ctx.filteredData = {}
   ctx.resbody = {}
   ctx.realpath = `${dirname}/dist${ctx.url.pathname}` // 此处设置在/dist下是因为前端的静态资源都在压缩文件都在dist中
   ctx.res = res
   ctx.req = req
-
+  /**
+   * 过滤数据
+   * @param {Object} postData controller处理后的数据
+   */
+  ctx.filter = function (postData) {
+    Object.assign(this.filteredData, postData)
+  }
   return ctx
 }
 

@@ -1,62 +1,66 @@
-const path = require('path')
 const baseTips = require('../middlewares/baseTips')
 let Cache = require('../middlewares/cache')
 let mysqlModule = require('../middlewares/mysqlModule')
-let fsModule = require('../middlewares/fsModule')
 /**
  * 添加类别
  */
-exports.add = async postData => {
+exports.add = async ctx => {
+  const postData = ctx.filteredData
   await mysqlModule.queryConnection('INSERT INTO Category(name) VALUES(?)', [postData.name])
     .then(async result => {
       await Cache.setDefaultModel('categoryModel')
+      ctx.resbody = Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`添加类别error：${error}`)
-      Cache.setModel('tmpModel', baseTips['081'])
+      ctx.resbody = baseTips['081']
     })
 }
 
 /**
  * 获取类别
  */
-exports.get = async postData => {
+exports.get = async ctx => {
   // 查询
   await mysqlModule.queryConnection(`SELECT * FROM Category`)
     .then(result => {
-      Cache.setModel('tmpModel', result)
+      ctx.resbody = Cache.addBaseModel(result)
     })
     .catch(error => {
       console.log(`查询类别出错：${error}`)
-      Cache.setModel('tmpModel', baseTips['082'])
+      ctx.resbody = baseTips['082']
     })
 }
 
 /**
  * 删除类别
  */
-exports.delete = async postData => {
+exports.delete = async ctx => {
+  const postData = ctx.filteredData
   const id = postData.id
   await mysqlModule.queryConnection(`DELETE FROM Category WHERE idCategory = ?`, [id])
     .then(async result => {
       await Cache.checkDefaultModel('categoryModel', id)
+      ctx.resbody = Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`删除类别出错：${error}`)
-      Cache.setModel('tmpModel', baseTips['082'])
+      ctx.resbody = baseTips['082']
     })
 }
 
 /**
  * 修改类别
  */
-exports.put = async postData => {
+exports.put = async ctx => {
+  const postData = ctx.filteredData
   await mysqlModule.queryConnection(`UPDATE Category SET name = ? WHERE idCategory = ?`, [postData.name, postData.id])
     .then(async result => {
       await Cache.checkDefaultModel('categoryModel', postData.id)
+      ctx.resbody = Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`修改类别出错：${error}`)
-      Cache.setModel('tmpModel', baseTips['082'])
+      ctx.resbody = baseTips['082']
     })
 }

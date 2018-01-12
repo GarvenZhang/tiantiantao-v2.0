@@ -32,17 +32,13 @@ exports.post = async ctx => {
     code: ['12']
   }])
   if (typeof ret === 'object') {
-    Object.assign(ctx.resbody, ret)
+    ctx.resbody = ret
     return
   }
+  ctx.filter(postData)
+
   // model
-  if (!Cache.getModel('goodsModel') || Cache.getModel('goodsModel').data.length <= 16) {
-    await goodsModel.add(postData)
-  } else {
-    goodsModel.add(postData)
-  }
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  await goodsModel.add(ctx)
 }
 
 /**
@@ -59,37 +55,36 @@ exports.get = async ctx => {
   // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
   const start = nextPage * perPage - perPage
   const offset = perPage
-
   // 具体商品
   if (name.indexOf('id_') === 0) {
     let id = /^id_(\d)+?$/.exec(name)[1]
-    await goodsModel.get({
+    ctx.filter({
       id
     })
   // 根据类别查询商品
   } else if (name.indexOf('type_') === 0) {
     let categoryId = /^type_(\d)+?$/.exec(name)[1]
-    await goodsModel.get({
+    ctx.filter({
       categoryId, start, offset
     })
   // 管理员
   } else if (name === 'all') {
-    await goodsModel.get({
+    ctx.filter({
       start, offset
     })
   // 只根据名称查询
   } else if (name !== 'all' && min === max) {
-    await goodsModel.get({
+    ctx.filter({
       name, start, offset
     })
   // 根据名称和价格范围来查询
   } else if (name !== 'all' && min !== max) {
-    await goodsModel.get({
+    ctx.filter({
       name, start, offset, min, max
     })
   }
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  await goodsModel.get(ctx)
+
 }
 
 /**
@@ -97,10 +92,11 @@ exports.get = async ctx => {
  */
 exports.delete = async ctx => {
   const id = ctx.aUrlParam[0]
+  ctx.filter({
+    id
+  })
   // model
-  await goodsModel.delete({id})
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  await goodsModel.delete(ctx)
 }
 
 /**
@@ -108,7 +104,6 @@ exports.delete = async ctx => {
  */
 exports.put = async ctx => {
   let postData = ctx.reqbody
-  console.log(postData)
   // 检验
   let ret = Formvalidate([{
     value: postData.name,
@@ -128,13 +123,13 @@ exports.put = async ctx => {
     code: ['16']
   }])
   if (typeof ret === 'object') {
-    Object.assign(ctx.resbody, ret)
+    ctx.resbody = ret
     return
   }
+  ctx.filter(postData)
+
   // model
-  goodsModel.put(postData)
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  goodsModel.put(ctx)
 }
 
 /**
@@ -142,8 +137,8 @@ exports.put = async ctx => {
  */
 exports.addImg = async ctx => {
   const postData = ctx.reqbody
+  ctx.filter(postData)
+
   // model
-  await goodsModel.addImg(postData)
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  await goodsModel.addImg(ctx)
 }
