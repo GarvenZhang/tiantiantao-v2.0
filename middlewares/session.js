@@ -1,9 +1,10 @@
 let sessionsModule = {
   sessions: {}, // session列表
-  session_id: '', // 当前处理的session_id
   EXPIRES: 20 * 60 * 1000,  // 2h过期时间
   CHAR: '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM', // 随机字符串
-  // 添加session
+  /**
+   * 添加session
+   */
   add: function () {
     let CHAR = this.CHAR
     let EXPIRES = this.EXPIRES
@@ -14,38 +15,46 @@ let sessionsModule = {
       let position = Math.random() * CHAR.length | 0
       sessionId += CHAR.substring(position, position + 1)
     }
-    this.session_id = sessionId
     // expires
     let dt = new Date().getTime() + EXPIRES
     // 存进去
     let session = {
       sessionId,
+      account: '',
       expires: dt,
+      userData: {},
       visitTimes: 1
     }
     sessions[sessionId] = session
   },
-  // 更新session
-  update: function () {
+  /**
+   * 更新session
+   */
+  update: function (sessionId) {
     let sessions = this.sessions
-    let sessionId = this.session_id
     let EXPIRES = this.EXPIRES
     // expires
     sessions[sessionId].expires = new Date().getTime() + EXPIRES
     // visitTimes
     ++sessions[sessionId].visitTimes
-    // session_id
-    this.session_id = sessionId
   },
-  // 设置session
-  set: function (res) {
-    res.setHeader('Set-Cookie', `session_id=${this.session_id}; httpOnly`)
+  /**
+   * 设置session
+   * @param {Object} res 响应对象
+   */
+  set: function (res, sessionId) {
+    res.setHeader('Set-Cookie', `session_id=${sessionId}; httpOnly`)
   },
-  // 删除指定session
-  remove: function (session) {
-    delete this.sessions[session.sessionId]
+  /**
+   * 删除指定session
+   * @param {Object} sessionId 某个session的id
+   */
+  remove: function (sessionId) {
+    delete this.sessions[sessionId]
   },
-  // 清楚过期的session
+  /**
+   * 清除过期的session
+   */
   clean: function () {
     let sessions = this.sessions
     for (var session in sessions) {
@@ -54,7 +63,11 @@ let sessionsModule = {
       }
     }
   },
-  // 取cookie
+  /**
+   * 从cookie中获取特定值
+   * @param {String} cookies 请求头cookies
+   * @param {String} name 名称
+   */
   getCookie: function (cookies = '', name) {
     let result = ''
     let item = []
@@ -70,21 +83,35 @@ let sessionsModule = {
     })
     return result
   },
-  // 初始化
-  init: function (cookies, res) {
+  /**
+   * 获取用户信息
+   * @param {String} cookies 请求头cookies字段值
+   * @return {Object} 用户信息
+   */
+  getUserId: function (cookies) {
     let sessions = this.sessions
-    this.session_id = this.getCookie(cookies, 'session_id')
+    let sessionId = this.getCookie(cookies, 'session_id')
+    return sessions[sessionId]
+  },
+  /**
+   * 初始化sessions
+   * @param {String} cookies 请求头中的cookie字段值
+   * @param {Object} userData 用户信息
+   * @param {Object} res 响应对象
+   */
+  init: function (cookies, userData, res) {
+    let sessions = this.sessions
+    let sessionId = this.getCookie(cookies, 'session_id')
     // 无则创建，有则更新
-    let sessionId = this.session_id
     if (!sessionId) {
       this.add()
     } else if (sessions[sessionId].expires > new Date().getTime()) {
-      this.update()
+      this.update(sessionId)
     } else {
-      this.remove(sessions[sessionId])
+      this.remove(sessionId)
     }
-    this.set(res)
-    return sessions[this.session_id]
+    // 设置相应头中的cookie字段
+    this.set(res, sessionId)
   }
 }
 

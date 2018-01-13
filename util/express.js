@@ -49,7 +49,6 @@ express.fn = express.prototype = {
 
       // 获得当前index.html路径
       let pathname = ctx.url.pathname
-
       // 请求url的判断
       // 排除/favicon.ico
       if (pathname == '/favicon.ico') {

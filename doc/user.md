@@ -6,7 +6,7 @@
 |/v1/user   |POST   |注册新用户|
 |/v1/user/login   |POST     |登陆 |
 |/v1/user    |PUT    |修改资料   |
-|/v1/user/:id/vip    |GET    |查看会员   |
+|/v1/user/vip    |GET    |查看会员   |
 |/v1/user/:id/vip    |PUT    |解冻/冻结vip   |
 |/v1/user/vip    |POST    |升级为vip   |
 ---
@@ -116,22 +116,12 @@ PUT /v1/user/:id/vip
 ## 查看会员 - 管理员
 
 ```
-GET /v1/user/:account/vip
+GET /v1/user/vip
 ```
 
 `请求参数`
 
 account为某个用户的account值，若查全部则传`all`
-
-`返回`
-
-200
-
-## 查看会员 - 用户
-
-```
-GET /v1/user
-```
 
 `返回`
 
