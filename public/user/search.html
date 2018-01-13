@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天淘</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <style type="text/css">
+        .price-form {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <main class="main">
+       <section class="content-section">
+           <div class="section-header clearfix">
+               <h2 class="header-ti">按商品价格查询</h2>
+           </div>
+           <form class="price-form">
+               <div>
+                   <label>价格：</label><input type="text" id="js-sm">-<input type="text" id="js-big"> <button type="button" id="js-sure">确定</button>
+               </div>
+           </form>
+       </section>
+        <section class="content-section">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">搜索结果</h2>
+            </div>
+            <div class="section-wrapper clearfix" id="search-area"></div>
+        </section>
+    </main>
+</div>
+
+<script type="text/javascript" src="/src/js/common.js"></script>
+<script type="text/javascript" src="/src/js/user.js"></script>
+<script type="text/javascript" src="/src/js/public.js"></script>
+<script type="text/javascript" src="/src/js/search.js"></script>
+</body>
+</html>

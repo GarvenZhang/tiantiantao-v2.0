@@ -1,0 +1,194 @@
+body {
+    background: white;
+}
+em {
+    font-style: normal;
+}
+.wrapper {
+    width: 1000px;
+    margin: 0 auto;
+    background: white;
+}
+.main-hd {
+    margin: 15px 0;
+}
+.main-hd .main-tt {
+    font: bolder 24px/1.5 '';
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+}
+.cart-main .cart-table-th {
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+}
+.cart-table-th .th,
+.order-content .td{
+    float: left;
+}
+.cart-table-th .th .th-inner {
+    padding: 0 0 0 10px;
+}
+.th-chk, .td-chk {
+    width: 70px;
+}
+.th-info, .td-info {
+    width: 450px;
+}
+.th-price, .td-price {
+    width: 120px;
+}
+.th-amount, .td-amount {
+    width: 140px;
+}
+.th-sum, .td-sum {
+    width: 120px;
+}
+.th-op, .td-op {
+    width: 84px;
+}
+.cart-table-th .cart-checkbox,
+.order-content .cart-checkbox {
+    padding-right: 10px;
+}
+.order-content .cart-checkbox {
+    padding-left: 10px;
+}
+.cart-checkbox input {
+    margin-right: 10px;
+}
+.order-content .order-item {
+    border: 1px solid #e7e7e7;
+    background: #fcfcfc;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.order-content .td-inner {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+.td-info .item-pic {
+    float: left;
+}
+.td-info .item-pic a{
+    width: 80px;
+    height: 80px;
+    display: block;
+}
+.td-info .item-pic img {
+    width: 80px;
+    height: 80px;
+    display: block;
+    vertical-align: middle;
+    border: 1px solid #e7e7e7;
+}
+.td-info .item-info {
+    width: 300px;
+    float: left;
+}
+.td-info .item-info .item-basic-info{
+    margin-left: 20px;
+}
+.td-amount .amount-wrapper {
+    width: 71px;
+    overflow: hidden;
+}
+.amount-wrapper a {
+    width: 15px;
+    height: 23px;
+    text-align: center;
+    border: 1px solid #c0c0c0;
+}
+.amount-wrapper .minus {
+    float: left;
+}
+.amount-wrapper .plus {
+    float: right;
+}
+.amount-wrapper .text-amount {
+    width: 35px;
+    height: 15px;
+    line-height: 15px;
+    padding: 4px 0;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #eeeeee;
+}
+.td-sum .price {
+    font-size: 18px;
+    color: red;
+}
+
+.td-info .item-info a:hover,
+.td-op a:hover {
+    color: orangered;
+    text-decoration: underline;
+}
+.tool-bar {
+    width: 1000px;
+    height: 50px;
+    font: 16px/50px '';
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    background: #e5e5e5;
+}
+.tool-bar .select-all {
+    float: left;
+    padding: 0 10px;
+}
+.tool-bar .select-all input {
+    margin-right: 5px;
+}
+.tool-bar .options {
+    float: left;
+    margin-left: 20px;
+}
+.tool-bar .options a:hover {
+    color: orangered;
+}
+.tool-bar .float-bar-right {
+    float: right;
+}
+.tool-bar .float-bar-right > div {
+    float: left;
+}
+.amount-sum {
+    margin-right: 20px;
+}
+.amount-sum em {
+    color: red;
+}
+.price-sum {
+    margin-right: 20px;
+}
+.price-sum .price{
+    color: red;
+    font-size: 24px;
+    float: left;
+    overflow: hidden;
+    margin-left: 10px;
+}
+.price-sum .price .price-sign {
+    font-size: 14px;
+    font-weight: normal;
+    float: left;
+    vertical-align: bottom;
+}
+.price-sum .price .total-symbol {
+    float: left;
+}
+.price-sum .txt {
+    float: left;
+}
+
+.btn-area button {
+    width: 100px;
+    font-size: 20px;
+    border: none;
+    color: white;
+    background: orangered;
+}
+

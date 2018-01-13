@@ -1,0 +1,143 @@
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.header {
+    width: 100%;
+}
+.header-top {
+    background: #f5f5f5;
+}
+.header-top .top-list {
+    float: right;
+    padding: 10px 0;
+}
+.header-top .list-item {
+    float: left;
+    margin-left: 10px;
+}
+.header-top a:hover {
+    color: blue;
+}
+
+.header-middle {
+    padding: 10px 0;
+}
+.header-middle .header-hd {
+    float: left;
+}
+.header-hd .hd-a,
+.header-hd .hd-ti {
+    font: bolder 40px/1.5 '';
+    display: block;
+    margin-left: 40px;
+}
+.header-middle {
+    background: white;
+}
+.header-middle .header-search-form {
+    float: left;
+    margin-top: 15px;
+    margin-left: 100px;
+}
+.header-search-form .search-input,
+.header-search-form .search-btn {
+    float: left;
+}
+.header-search-form .search-input {
+    width: 450px;
+    height: 28px;
+    font: 14px/2 '';
+    border: 1px solid orangered;
+}
+.header-search-form .search-btn {
+    width: 75px;
+    height: 28px;
+    border: 1px solid orangered;
+    color: whitesmoke;
+    background: orangered;
+}
+.header-search-form .search-btn:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .2);
+}
+.content {
+    padding: 0 50px;
+}
+.content-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+}
+.section-header .header-ti {
+    font: bold 30px/1.5 '';
+    float: left;
+}
+.section-header .more {
+    float: right;
+    margin-top: 10px;
+}
+.section-header .more:hover {
+    color: red;
+}
+
+.section-wrapper .section-item {
+    width: 24%;
+    float: left;
+    margin-left: 8px;
+    margin-top: 10px;
+    background: #f5f5f5;
+    border: 1px solid #eeeeee;
+}
+.item-img-wrapper {
+    text-align: center;
+}
+.section-item .item-img {
+    width: 210px;
+    padding: 10px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+.section-item .item-detail-wrapper {
+    margin: 10px;
+    padding: 0 10px;
+    background: white;
+    overflow: hidden;
+}
+
+.item-detail-wrapper .item-link {
+    font: 16px/1.5 '';
+    display: block;
+}
+.item-detail-wrapper .item-link:hover {
+    color: orangered;
+}
+.item-detail-wrapper .item-price {
+    color: red;
+}
+.item-price .price-sign {
+    margin-right: 5px;
+}
+.item-price .price {
+    font-size: 20px;
+}
+.goods-type-list {
+    display: flex;
+    margin-top: 10px;
+}
+.goods-type-list .list-item {
+    width: 20%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.goods-type-list .list-link {
+    width: 90%;
+    margin: 0 5px;
+    display: block;
+    font: 16px/2 '';
+    color: white;
+    background: orangered;
+}
+.goods-type-list .list-link:hover {
+    color: yellow;
+}
