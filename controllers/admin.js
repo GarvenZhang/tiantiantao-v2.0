@@ -8,10 +8,10 @@ exports.vip = async ctx => {
 
 }
 
-exports.goods = async ctx => {
+exports.type = async ctx => {
 
 }
 
-exports.goods = async ctx => {
+exports.orderform = async ctx => {
 
 }
