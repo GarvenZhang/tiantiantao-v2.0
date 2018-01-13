@@ -3,6 +3,7 @@ const CategoryController = require('./controllers/category')
 const EntryController = require('./controllers/entry')
 const IndexController = require('./controllers/index')
 const AdminController = require('./controllers/admin')
+const UserController = require('./controllers/user')
 module.exports = app => {
   // 商品模块
   app.get('/v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:min&max=:max', GoodsController.get)
@@ -20,7 +21,12 @@ module.exports = app => {
   // 购物车模块
 
   // 用户模块
-
+  app.post('/v1/user', UserController.register)
+  app.post('/v1/user/login', UserController.login)
+  app.put('/v1/user', UserController.put)
+  app.get('/v1/user/vip', UserController.getVip)
+  app.put('/v1/user/:id/vip', UserController.putVip)
+  app.post('/v1/user/vip', UserController.postVip)
   // ------------------------ 直出模版 --------------------------- //
   // 登陆
   app.get('/login', EntryController.login)

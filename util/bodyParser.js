@@ -17,7 +17,7 @@ const bodyParser = function (req, res, dirname, viewPath) {
   ctx.reqbody = {}
   ctx.filteredData = {}
   ctx.resbody = {}
-  ctx.realpath = `${dirname}/dist${ctx.url.pathname}` // 此处设置在/dist下是因为前端的静态资源都在压缩文件都在dist中
+  ctx.realpath = `${dirname}${ctx.url.pathname}` // 此处设置在/dist下是因为前端的静态资源都在压缩文件都在dist中
   ctx.viewPath = viewPath
   ctx.res = res
   ctx.req = req
@@ -35,7 +35,9 @@ const bodyParser = function (req, res, dirname, viewPath) {
    */
   ctx.render = function (templateName, data = {}) {
     const templateStr = fs.readFileSync(`${this.viewPath}${templateName}.ejs`, 'utf8')
-    this.resbody = ejs.render(templateStr, data)
+    this.resbody = ejs.render(templateStr, Object.assign(data, {
+      filename: `${this.viewPath}/${templateName}.ejs`
+    }))
   }
   return ctx
 }
