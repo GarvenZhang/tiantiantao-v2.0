@@ -10,6 +10,8 @@ mysqlModule.createPool(config.dbOptions)
 Cache.initModel(config.modelRelationWithTable, config.baseModel, mysqlModule, config.modelDataMinNum)
 // 设置根路径
 app.setRootPath(__dirname)
+// 配置view层
+app.setViewPath(`${__dirname}/views`)
 
 // 设置路由
 router(app)

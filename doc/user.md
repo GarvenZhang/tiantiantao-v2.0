@@ -16,14 +16,12 @@
 ```json
 {
   "id": "1",
-  "username": "garven",
-  "sex": "male",
-  "phone": 15622178496,
-  "email": "jf00258jf@hotmail.com",
-  "address": "广工",
-  "vipStatus": 0,
-  "orderform_id": [1, 2, 3],
-  "shoppingcart_id": [3, 4, 5]
+  "accounr": "15622178496",
+  "name": "garven",
+  "sex": "男",
+  "isVid": 0,
+  "orderformId": [1, 2, 3],
+  "shoppingcartId": 1
 }
 ```
 
@@ -38,11 +36,10 @@ POST /v1/user
 ---
 |参数    |含义   |备注     |
 |:------|:---------|:--------|
-|username   |用户名   |必传  |
-|password   |密码   |必传，md5加密  |
-|sex   |性别     |必传，1代表男，2代表女 |
-|phone    |手机号码    |必传，11位   |
-|email    |邮箱    |必传   |
+|account   |账号   |必传，为手机号码  |
+|name   |用户名   |必传  |
+|password   |密码   |必传，[md5加密]  |
+|sex   |性别     |必传，0代表男，1代表女 |
 ---
 
 `返回`
@@ -60,8 +57,8 @@ POST /v1/user/login
 ---
 |参数    |含义   |备注     |
 |:------|:---------|:--------|
-|username   |用户名   |必传  |
-|password    |密码    |必传, md5加密   |
+|account   |账号   |必传  |
+|password    |密码    |必传, [md5加密]   |
 ---
 
 `返回`
@@ -79,36 +76,26 @@ PUT /v1/user
 ---
 |参数    |含义   |备注     |
 |:------|:---------|:--------|
-|username   |用户名   |必传  |
-|password   |密码   |必传，md5加密  |
-|sex   |性别     |必传，1代表男，2代表女 |
-|phone    |手机号码    |必传，11位   |
-|email    |邮箱    |必传   |
+|name   |用户名   |必传  |
+|password   |密码   |必传，[md5加密]  |
+|sex   |性别     |必传，0代表男，1代表女 |
 ---
 
 `返回`
 
 200，新创建的UserInfo
 
-## 升级为会员 
+## 升级为会员
 
 ```
 POST /v1/user/vip
 ```
 
-`请求参数`
-
----
-|参数    |含义   |备注     |
-|:------|:---------|:--------|
-|id   |用户id   |必传  |
----
-
 `返回`
 
 200
 
-## 冻结/解冻会员 
+## 冻结/解冻会员 - 管理员
 
 ```
 PUT /v1/user/:id/vip
@@ -126,15 +113,25 @@ PUT /v1/user/:id/vip
 
 202
 
-## 查看会员 
+## 查看会员 - 管理员
 
 ```
-GET /v1/user/:id/vip
+GET /v1/user/:account/vip
 ```
 
 `请求参数`
 
-id为某个用户的id值，若查全部则传`all`
+account为某个用户的account值，若查全部则传`all`
+
+`返回`
+
+200
+
+## 查看会员 - 用户
+
+```
+GET /v1/user
+```
 
 `返回`
 

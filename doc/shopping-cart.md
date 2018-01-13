@@ -4,11 +4,11 @@
 |api    |请求方法   |描述     |
 |:------|:---------|:--------|
 |/v1/shoppingcart   |POST   |加入购物车  |
-|/v1/shoppingcart/:id   |DELETE     |删除购物车商品  |
-|/v1/shoppingcart    |GET    |查看购物车   |
-|/v1/ShoppingCartInfo/:id    |PUT    |修改购物车   |
+|/v1/shoppingcart/:id   |DELETE     |清空购物车  |
+|/v1/shoppingcart/:id    |DELETE    |删除购物车中的商品   |
+|/v1/shoppingcart/:id    |GET    |查看购物车   |
 ---
-
+e
 ## 购物车完整信息 ShoppingCartInfo
 
 ```
@@ -96,8 +96,12 @@ PUT /v1/shoppingcart/:id
 ## 查询购物车
 
 ```
-GET /v1/shoppingcart
+GET /v1/shoppingcart/:id
 ```
+
+`请求参数`
+
+id为用户id
 
 `返回`
 
