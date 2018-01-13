@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cms登录</title>
+    <link rel="stylesheet" type="text/css" href="/src/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/src/css/login.css">
+</head>
+<body>
+
+<div class="container --register">
+    <h1>天天淘 - 注册</h1>
+    <form class="form">
+        <div class="form-control">
+            <label>用户名</label><input type="text" name="name" placeholder="请输入用户名">
+        </div>
+        <div class="form-control">
+            <label>密码</label><input type="password" name="password" placeholder="请输入密码">
+        </div>
+        <div class="form-control">
+            <label>电话</label><input type="text" name="mobile" placeholder="请输入密码">
+        </div>
+        <div class="form-control">
+            <label>地址</label><input type="text" name="address" placeholder="请输入密码">
+        </div>
+        <div class="form-control">
+            <label>邮箱</label><input type="text" name="email" placeholder="请输入密码">
+        </div>
+        <div class="form-control">
+            <button type="button" id="goBack">返回</button>
+            <button type="button" id="sure">确认</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/src/js/common.js"></script>
+<script type="text/javascript" src="/src/js/md5.js"></script>
+<script type="text/javascript">
+  const register_form = $('.form')[0];
+  const sure = $('#sure')[0];
+  const goBack = $('#goBack')[0];
+
+  goBack.onclick = () => {
+    location.href = '/src/login.html';
+  }
+  sure.onclick = () => {
+    ajax({
+      method: 'POST',
+      url: '/user/register',
+      data: JSON.stringify({
+        name: register_form.name.value.trim(),
+        password: md5(register_form.password.value.trim()),
+        mobile: register_form.mobile.value.trim(),
+        email: register_form.email.value.trim(),
+        address: register_form.address.value.trim(),
+        status: 1
+      }),
+      headers:[
+        {
+          name: 'Content-Type',
+          value: 'application/json'
+        }
+      ],
+      fn: function (data) {
+        const result = JSON.parse(data);
+
+        if(result.status) {
+          alert('注册成功！')
+          location.href = '/src/login.html';
+        } else {
+          alert('注册成功！')
+        }
+      }
+    })
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+.content {
+    padding: 10px;
+}
+.aside {
+    width: 200px;
+    min-height: 400px;
+    float: left;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    margin-right: 10px;
+    background: darkblue;
+}
+.aside .nav-tt {
+    font: bolder 24px/2 '';
+    color: whitesmoke;
+    padding-left: 10px;
+}
+.aside .list {
+    padding: 10px 0;
+}
+.aside .list-item {
+    font: 18px/3 '';
+    padding-left: 10px;
+    border-bottom: 2px solid #f5f5f5;
+    background: rgba(255, 255, 255, 0.3);
+}
+.aside .list-item:last-child {
+    border: none;
+}
+.aside .item-link {
+    color: white;
+}
+.aside .item-link:hover {
+    color: red;
+}
+.main {
+    overflow: hidden;
+}
+.main .content-section {
+    margin: 0;
+}

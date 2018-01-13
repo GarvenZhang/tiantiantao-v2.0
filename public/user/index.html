@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天淘</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-top clearfix">
+        <ul class="top-list clearfix">
+            <li class="list-item" id="userInfo">
+                <!--<span class="user"></span>-->
+                <!--<a href="javascript:;" id="js-logout"></a>-->
+            </li>
+            <li class="list-item"><a href="javascript:;" id="js-user-center">[用户中心]</a></li>
+            <li class="list-item"><a href="javascript:;" >[购物车]</a></li>
+        </ul>
+    </div>
+    <div class="header-middle clearfix">
+        <div class="header-hd">
+            <a href="/src/index.html" class="hd-a"><h1 class="hd-ti">天天淘</h1></a>
+        </div>
+        <form class="header-search-form clearfix">
+            <input type="text" class="search-input"><button type="button" class="search-btn">搜索</button>
+        </form>
+    </div>
+</header>
+<div class="content">
+    <main class="main">
+        <section class="content-section section--goodsShow">
+            <form class="price-form clearfix">
+                价格筛选：<input type="text" class="price-input"> ---- <input type="text" class="price-input"> <button type="button" class="search-btn">搜索</button>
+            </form>
+        </section>
+        <section class="content-section section--goodsShow">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">商品分类</h2>
+            </div>
+            <div class="section-wrapper clearfix" id="categories">
+                <ul class="goods-type-list">
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="content-section section--commendedGoods">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">推荐商品</h2><a href="/src/product-feature.html" class="more">查看更多</a>
+            </div>
+            <div class="section-wrapper clearfix" id="commendGoods">
+                <div class="section-item">
+                    <div class="item-img-wrapper">
+                        <img class="item-img" src="./imgs/timg.gif">
+                    </div>
+                    <div class="item-detail-wrapper">
+                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
+                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content-section section--discountGoods">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">特价商品</h2><a href="/src/specials.html" class="more">查看更多</a>
+            </div>
+            <div class="section-wrapper clearfix" id="discountGoods">
+                <div class="section-item">
+                    <div class="item-img-wrapper">
+                        <img class="item-img" src="./imgs/timg.gif">
+                    </div>
+                    <div class="item-detail-wrapper">
+                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
+                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

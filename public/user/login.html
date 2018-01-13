@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天淘 - 登录</title>
+    <link rel="stylesheet" type="text/css" href="/src/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/src/css/login.css">
+</head>
+<body>
+
+<div class="container --login">
+    <h1>天天淘 - 登录</h1>
+    <form class="form">
+        <div class="form-control">
+            <label>用户名</label><input type="text" name="name" placeholder="请输入用户名">
+        </div>
+        <div class="form-control">
+            <label>密码</label><input type="password" name="password" placeholder="请输入密码">
+        </div>
+        <div class="form-control">
+            <button type="button" id="login">登录</button>
+            <button type="button" id="register">注册</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/src/js/common.js"></script>
+<script type="text/javascript" src="/src/js/md5.js"></script>
+<script type="text/javascript">
+    const login = $('#login')[0];
+    const register = $('#register')[0];
+    const login_form = $('.form')[0];
+    login.onclick = () => {
+      ajax({
+        method: 'POST',
+        url: '/user/login',
+        data: JSON.stringify({
+          name: login_form.name.value.trim(),
+          password: md5(login_form.password.value.trim())
+        }),
+        headers: [
+          {
+            name: 'Content-Type',
+            value: 'application/json'
+          }
+        ],
+        fn: function (data) {
+          const result = JSON.parse(data);
+          console.log(result.data);
+
+          if(result.status) {
+            alert('登录成功！')
+           location.href = '/src/index.html';
+          } else {
+            alert('登录失败！')
+          }
+        }
+      })
+    }
+    register.onclick = () => {
+      location.href = '/src/register.html';
+    }
+</script>
+</body>
+</html>

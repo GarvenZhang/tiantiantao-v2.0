@@ -1,0 +1,72 @@
+.section-wrapper .form {
+    padding: 20px;
+    margin: 20px 0;
+    background: #f5f5f5;
+}
+.section-wrapper .form .form-item {
+    margin: 10px 0;
+}
+.section-wrapper .form .form-label {
+    width: 150px;
+    float: left;
+}
+.section-wrapper .form .form-input {
+    width: 350px;
+}
+.section-wrapper .form .form-btn {
+    font: 16px/1.5 '';
+    padding: 3px 15px;
+    color: white;
+    float: right;
+    margin-right: 40px;
+    border: transparent;
+    border-radius: 5px;
+    background: dodgerblue;
+}
+.section-wrapper .form .form-btn:hover {
+    box-shadow: 3px 3px 1px rgba(0,0,0,0.2);
+}
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+}
+.table {
+    width: 96%;
+    margin: 10px 0;
+}
+.table th,
+.table td {
+    text-align: center;
+    border: 1px solid;
+}
+.table td {
+    height: 34px;
+}
+.table .operation {
+    padding: 4px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background: #0a6cd6;
+}
+.order-list {
+    background: #efefef;
+    padding: 10px;
+    margin-top: 10px;
+}
+.order-list .list-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: white;
+}
+.order-info {
+    display: flex;
+    margin: 10px 0;
+}
+.order-info .order-ti{
+    width: 100px;
+    font: bolder 16px/2 '';
+}
+.order-info .order-val {
+    font: 16px/2 '';
+}
