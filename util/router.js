@@ -182,8 +182,15 @@ async function successAPIHandle (categoryObj, pathname, res, ctx) {
     res.statusCode = 200
   }
   // 发送相应内容
-  res.setHeader('Content-Type', 'application/json')
-  res.end(JSON.stringify(ctx.resbody))
+  // html文件
+  if (typeof ctx.resbody === 'string') {
+    res.setHeader('Content-Type', 'text/html')
+    res.end(ctx.resbody)
+  // json格式数据
+  } else if (typeof ctx.resbody === 'object') {
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify(ctx.resbody))
+  }
 }
 
 /**

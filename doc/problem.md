@@ -77,3 +77,11 @@ delete之前会有OPTIONS预请求
    每一个component - 根据不同的conatiner做出不同的渲染
    
    先写详细的component再写container
+   
+   
+错误返回结果的处理。。。。。   
+
+返回的baseTips应该和数据库的error建立映射关系
+
+
+删除成功，是返回success还是204?

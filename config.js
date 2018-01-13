@@ -18,7 +18,8 @@ module.exports = {
     'smImgSrcModel': 'SmImgSrc',
     'shoppingCartModel': 'ShoppingCart',
     'orderFormModel': 'OrderForm',
-    'tmpModel': ''  // get请求用
+    'errorModel': '',  // 错误信息的模型
+    'get200Model': '', // 获取成功的模型
   },
   modelDataMinNum: 16
 }

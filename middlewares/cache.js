@@ -6,6 +6,7 @@ module.exports = {
   relation: {}, // 映射关系,
   mysqlModule: null,  // mysql模块
   dataMinNum: 16, // 最小数据量
+  baseModel: null,  // 基础模型
   /**
    * 设置model
    * @param {String} modelName 模型名称
@@ -32,7 +33,7 @@ module.exports = {
     const pageMinNum = this.dataMinNum
     // 存在但不到一页，则增加model中的data
     if (this.getModel(modelName).data.length <= pageMinNum) {
-      await mysqlModule.queryConnection(`SELECT * FROM ${tableName}`)
+      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
         })
@@ -51,11 +52,20 @@ module.exports = {
     const isChanged = this.getModel(modelName).data.some(item => item.id === id)
     if (isChanged) {
       // 更新
-      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} TOP ${pageMinNum}`)
+      await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)
         })
     }
+  },
+  /**
+   * 附上baseModel
+   * @param {Object} ret 查询结果
+   */
+  addBaseModel (ret) {
+    let _baseModel = JSON.parse(JSON.stringify(this.baseModel))
+    _baseModel.data = ret
+    return _baseModel
   },
   /**
    * 清理缓存
@@ -74,6 +84,7 @@ module.exports = {
     // 设置模型与表关系
     this.relation = modelRelationWithTable
     // 设置baseModel
+    this.baseModel = baseModel
     for (var attr in modelRelationWithTable) {
       this.data[attr] = baseModel
     }

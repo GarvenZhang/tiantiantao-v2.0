@@ -1,5 +1,4 @@
 // middlewares
-let Cache = require('../middlewares/cache')
 let Formvalidate = require('../middlewares/formvalidate')
 // models
 let goodsModel = require('../models/goods')
@@ -23,7 +22,7 @@ exports.post = async ctx => {
     type: ['notNull'],
     code: ['16']
   }, {
-    value: postData.category_id,
+    value: postData.categoryId,
     type: ['notNull'],
     code: ['16']
   }, {
@@ -32,17 +31,13 @@ exports.post = async ctx => {
     code: ['12']
   }])
   if (typeof ret === 'object') {
-    Object.assign(ctx.resbody, ret)
+    ctx.resbody = ret
     return
   }
+  ctx.filter(postData)
+
   // model
-  if (!Cache.getModel('goodsModel') || Cache.getModel('goodsModel').data.length <= 16) {
-    await goodsModel.add(postData)
-  } else {
-    goodsModel.add(postData)
-  }
-  // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  await goodsModel.add(ctx)
 }
 
 /**
@@ -51,7 +46,6 @@ exports.post = async ctx => {
 exports.get = async ctx => {
   const aUrlParam = ctx.aUrlParam
   const name = aUrlParam[0]
-  const curPage = aUrlParam[1]
   const nextPage = aUrlParam[2]
   const perPage = aUrlParam[3]
   const min = aUrlParam[4]
@@ -60,25 +54,36 @@ exports.get = async ctx => {
   // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
   const start = nextPage * perPage - perPage
   const offset = perPage
-
+  // 具体商品
+  if (name.indexOf('id_') === 0) {
+    let id = /^id_(\d)+?$/.exec(name)[1]
+    ctx.filter({
+      id
+    })
+  // 根据类别查询商品
+  } else if (name.indexOf('type_') === 0) {
+    let categoryId = /^type_(\d)+?$/.exec(name)[1]
+    ctx.filter({
+      categoryId, start, offset
+    })
   // 管理员
-  if (name === 'all') {
-    await goodsModel.get({
+  } else if (name === 'all') {
+    ctx.filter({
       start, offset
     })
   // 只根据名称查询
   } else if (name !== 'all' && min === max) {
-    await goodsModel.get({
+    ctx.filter({
       name, start, offset
     })
   // 根据名称和价格范围来查询
   } else if (name !== 'all' && min !== max) {
-    await goodsModel.get({
+    ctx.filter({
       name, start, offset, min, max
     })
   }
-  // res
-  ctx.resbody = Cache.getModel('tmpModel')
+  await goodsModel.get(ctx)
+
 }
 
 /**
@@ -86,10 +91,11 @@ exports.get = async ctx => {
  */
 exports.delete = async ctx => {
   const id = ctx.aUrlParam[0]
+  ctx.filter({
+    id
+  })
   // model
-  await goodsModel.delete({id})
-  // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  await goodsModel.delete(ctx)
 }
 
 /**
@@ -111,14 +117,18 @@ exports.put = async ctx => {
     type: ['notNull'],
     code: ['16']
   }, {
-    value: postData.category_id,
+    value: postData.categoryId,
     type: ['notNull'],
     code: ['16']
   }])
   if (typeof ret === 'object') {
-    Object.assign(ctx.resbody, ret)
+    ctx.resbody = ret
     return
   }
+  ctx.filter(postData)
+
+  // model
+  goodsModel.put(ctx)
 }
 
 /**
@@ -126,8 +136,8 @@ exports.put = async ctx => {
  */
 exports.addImg = async ctx => {
   const postData = ctx.reqbody
+  ctx.filter(postData)
+
   // model
-  await goodsModel.addImg(postData)
-  // res
-  ctx.resbody = Cache.getModel('goodsModel')
+  await goodsModel.addImg(ctx)
 }

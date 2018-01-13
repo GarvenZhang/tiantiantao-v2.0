@@ -15,12 +15,21 @@ express.fn = express.prototype = {
   constructor: express,
   init: function () {
     this.rootpath = ''
-    this.dbOptions = {}
-    this.pool = null
-    this.connection = null
+    this.viewPath = ''
   },
+  /**
+   * 设置根路径
+   * @param {String} path 路径
+   */
   setRootPath: function (path) {
     this.rootpath = path
+  },
+  /**
+   * 设置view层路径
+   * @param {String} path 路径
+   */
+  setViewPath: function (path) {
+    this.viewPath = path
   },
   /**
    * listen方法
@@ -36,7 +45,7 @@ express.fn = express.prototype = {
       let isReqReg = /\/[^./]*?$/   // 判断是否为api接口的正则
 
       // bodyParser中间层，解析请求主体和请求头等
-      let ctx = bodyParser(req, res, self.rootpath)
+      let ctx = bodyParser(req, res, self.rootpath, self.viewPath)
 
       // 获得当前index.html路径
       let pathname = ctx.url.pathname
@@ -46,7 +55,7 @@ express.fn = express.prototype = {
       if (pathname == '/favicon.ico') {
       // 首页html文件
       } else if (pathname == '/index' || pathname == '/') {
-        router.goIndex(ctx)
+        // router.goIndex(ctx)
       // 接口api
       } else if (isReqReg.test(pathname)) {
         router.dealWithAPI(ctx)
