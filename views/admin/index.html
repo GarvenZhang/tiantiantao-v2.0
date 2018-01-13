@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="show"></div>
+<script src="../../public/common/ejs.js"></script>
+<script>
+    let str = `
+        <ul>
+            <li><%=data.txt%></li>
+            <li><%=data.time%></li>
+        </ul>
+     `
+    let obj = {
+      txt: 'HelloWord',
+      time: '2016-11-29'
+    }
+    let html = ejs.render(str, {data:obj})
+    document.getElementById('show').innerHTML = html
+</script>
+</body>
+</html>
