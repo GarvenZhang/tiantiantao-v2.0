@@ -88,7 +88,7 @@ let sessionsModule = {
    * @param {String} cookies 请求头cookies字段值
    * @return {Object} 用户信息
    */
-  getUserId: function (cookies) {
+  getSession: function (cookies) {
     let sessions = this.sessions
     let sessionId = this.getCookie(cookies, 'session_id')
     return sessions[sessionId]
