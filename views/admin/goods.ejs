@@ -25,7 +25,7 @@
     <div class="content">
         <!-- 商品管理 -->
         <div class="goods-wrapper">
-            <% for (var item in data){%>
+            <% for (var item in data){ console.log(data)%>
                 <div class="goods-item" data-id="<%=item.id%>">
                     <div class="item-inner">
                         <img src="<%=item.bigImg%>" class="item-img">
@@ -57,19 +57,25 @@
                     <label class="form-label">名称：<input type="text" class="form-input"></label>
                     <label class="form-label">描述：<input type="text" class="form-input"></label>
                     <label class="form-label">价钱：<input type="text" class="form-input"></label>
+                    <label class="form-label">类别：
+                        <select>
+                        </select>
+                    </label>
                 </form>
             </div>
         </div>
         <!-- 模态弹框内容区 结束-->
         <!-- 模态弹框尾部 -->
         <footer class="modal-footer">
-            <button type="button" class="btn">确定</button>
+            <button type="button" class="btn" id="js-edit-goods">确定</button>
         </footer>
         <!-- 模态弹框尾部 结束-->
     </div>
 </div>
 
+<script src="/public/common/common.js"></script>
 <script src="/public/libs/modal/modal.js"></script>
+<script src="/public/admin/js/goods.js"></script>
 <script>
   // 增加商品
   modal({

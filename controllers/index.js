@@ -3,6 +3,7 @@ const cache = require('../middlewares/cache')
  * 官网首页
  */
 exports.index = async ctx => {
+  console.log(ctx.pathname)
   ctx.render('/user/index', {
     data: {}
   })

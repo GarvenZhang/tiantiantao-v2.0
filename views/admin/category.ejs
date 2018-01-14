@@ -16,10 +16,10 @@
 <!-- 主体内容 -->
 <main class="main">
     <div class="content-header">
-        <button type="button" class="btn" id="js-add-type" data-target="#typeModal">增加类别</button>
+        <button type="button" class="btn" id="js-add-type" data-target="#addTypeModal">增加类别</button>
         <div class="search-area">
             <input type="text" placeholder="查找类别" class="input">
-            <a href="javascript:;" class="search-btn">🔍</a>
+            <a href="javascript:;" class="search-btn" id="js-search">🔍</a>
         </div>
     </div>
     <div class="content">
@@ -33,13 +33,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td></td>
-                    <td>
-                        <a href="javascript:;" class="operation">修改</a>
-                        <a href="javascript:;" class="operation">删除</a>
-                    </td>
-                </tr>
+                    <%for( let item of data.data) { console.log(data)%>
+                        <tr>
+                            <td><%=item.name%></td>
+                            <td>
+                                <a href="javascript:;" class="operation" data-target="#modifyTypeModal" id="js-modify-<%=item.idCategory%>">修改</a>
+                                <a href="javascript:;" class="operation" data-target="<%=item.idCategory%>" id="js-del-<%=item.idCategory%>">删除</a>
+                            </td>
+                        </tr>
+                    <%}%>
                 </tbody>
             </table>
         </div>
@@ -48,7 +50,7 @@
 
 
 <!-- 增加类别modal -->
-<div class="modal hide" id="typeModal" data-dismiss="true" >
+<div class="modal hide" id="addTypeModal" data-dismiss="true" >
     <div class="modal-inner">
         <!-- 模态弹框头部 -->
         <header class="modal-header">
@@ -60,28 +62,49 @@
         <!-- 模态弹框内容区 -->
         <div class="modal-content">
             <div class="content-inner">
-                <form class="form">
-                    <label class="form-label">类别：<input type="text" class="form-input"></label>
+                <form class="form" id="addForm">
+                    <label class="form-label">类别：<input type="text" class="form-input" name="type"></label>
                 </form>
             </div>
         </div>
         <!-- 模态弹框内容区 结束-->
         <!-- 模态弹框尾部 -->
         <footer class="modal-footer">
-            <button type="button" class="btn">确定</button>
+            <button type="button" class="btn" id="js-add-sure">确定</button>
         </footer>
         <!-- 模态弹框尾部 结束-->
     </div>
 </div>
 
+<!-- 修改类别modal -->
+<div class="modal hide" id="modifyTypeModal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">增加类别</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <form class="form" id="modifyForm">
+                    <label class="form-label">类别：<input type="text" class="form-input" name="type"></label>
+                </form>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn" id="js-modify-sure">确定</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+
+<script src="/public/common/common.js"></script>
 <script src="/public/libs/modal/modal.js"></script>
-<script>
-  // 增加类别
-  modal({
-    modal: document.getElementById('typeModal'),
-    target: document.getElementById('js-add-type'),
-    draggable: true
-  })
-</script>
+<script src="/public/admin/js/category.js"></script>
 </body>
 </html>

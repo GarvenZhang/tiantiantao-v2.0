@@ -54,6 +54,7 @@ exports.delete = async ctx => {
  */
 exports.put = async ctx => {
   const postData = ctx.filteredData
+  console.log()
   await mysqlModule.queryConnection(`UPDATE Category SET name = ? WHERE idCategory = ?`, [postData.name, postData.id])
     .then(async result => {
       await Cache.checkDefaultModel('categoryModel', postData.id)

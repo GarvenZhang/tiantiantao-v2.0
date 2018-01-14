@@ -32,7 +32,7 @@ module.exports = app => {
   app.get('/login', EntryController.login)
   app.get('/register', EntryController.register)
   // 官网
-  app.get('/', IndexController.index)
+  app.get('/i', IndexController.index)
   app.get('/list?:param', IndexController.list)
   app.get('/detail?:id', IndexController.detail)
   app.get('/shopping-cart?:id', IndexController.shoppingCart)
