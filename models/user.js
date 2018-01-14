@@ -55,16 +55,19 @@ exports.put = async ctx => {
 }
 
 /**
- * 解冻/冻结vip
+ * 解冻/冻结vip - 管理员
+ * 升级为vip - 用户
  */
 exports.putVip = async ctx => {
   const postData = ctx.filteredData
-  await mysqlModule.queryConnection('UPDATE User SET isVip = ? WHERE idUser = ', [postData.password, postData.name, postData.sex, postData.idUser])
+  await mysqlModule.queryConnection('UPDATE User SET isVip = ? WHERE idUser = ?', [postData.isVip, postData.idUser])
     .then(async result => {
-      session.put(result.idUser, result)
+      session.put(postData.idUser, {
+        isVip: postData.isVip
+      })
     })
     .catch(error => {
       console.log(`添加类别error：${error}`)
-      ctx.resbody = baseTips['081']
+      ctx.resbody = baseTips['082']
     })
 }

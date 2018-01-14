@@ -108,7 +108,7 @@ exports.putVip = async ctx => {
     ctx.resbody = baseTips['401']
     return
   }
-  ctx.filter(postData)
+  ctx.filter(Object.assign(postData, idUser))
   // model
   userModel.putVip(ctx)
 }
@@ -117,5 +117,11 @@ exports.putVip = async ctx => {
  * 升级为vip
  */
 exports.postVip = async ctx => {
-
+  let idUser = session.getSession(ctx.headers['cookie']).idUser
+  ctx.filter({
+    idUser,
+    isVip: 1
+  })
+  // model
+  userModel.putVip(ctx)
 }

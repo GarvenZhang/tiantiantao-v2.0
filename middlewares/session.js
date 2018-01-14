@@ -90,7 +90,7 @@ let sessionsModule = {
    */
   put: function (id, userData) {
     const sessions = this.sessions
-    sessions[id] = userData
+    Object.assign(sessions[id], userData)
   },
   /**
    * 获取用户信息
