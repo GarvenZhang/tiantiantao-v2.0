@@ -23,3 +23,33 @@ exports.login = async ctx => {
       ctx.resbody = baseTips['081']
     })
 }
+
+/**
+ * 注册
+ */
+exports.register = async ctx => {
+  const postData = ctx.filteredData
+  await mysqlModule.queryConnection('INSERT INTO User(account, password, name, sex) VALUES(?, ?, ?, ?)', [postData.account, postData.password, postData.name, postData.sex])
+    .then(async result => {
+      ctx.resbody = baseTips['00']
+    })
+    .catch(error => {
+      console.log(`添加类别error：${error}`)
+      ctx.resbody = baseTips['081']
+    })
+}
+
+/**
+ * 修改资料
+ */
+exports.put = async ctx => {
+  const postData = ctx.filteredData
+  await mysqlModule.queryConnection('UPDATE User SET password = ? AND name = ? AND sex = ? WHERE idUser = ?', [postData.password, postData.name, postData.sex, postData.idUser])
+    .then(async result => {
+      session.put(result.idUser, result)
+    })
+    .catch(error => {
+      console.log(`添加类别error：${error}`)
+      ctx.resbody = baseTips['081']
+    })
+}
