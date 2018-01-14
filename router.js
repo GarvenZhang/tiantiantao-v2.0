@@ -24,7 +24,7 @@ module.exports = app => {
   app.post('/v1/user', UserController.register)
   app.post('/v1/user/login', UserController.login)
   app.put('/v1/user', UserController.put)
-  app.get('/v1/user/vip', UserController.getVip)
+  app.get('/v1/user/:account/vip', UserController.getVip)
   app.put('/v1/user/:id/vip', UserController.putVip)
   app.post('/v1/user/vip', UserController.postVip)
   // ------------------------ 直出模版 --------------------------- //

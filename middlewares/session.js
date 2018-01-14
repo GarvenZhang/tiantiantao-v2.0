@@ -84,6 +84,15 @@ let sessionsModule = {
     return result
   },
   /**
+   * 修改session
+   * @param {String} id 用户id
+   * @param {Object} userData 用户数据
+   */
+  put: function (id, userData) {
+    const sessions = this.sessions
+    sessions[id] = userData
+  },
+  /**
    * 获取用户信息
    * @param {String} cookies 请求头cookies字段值
    * @return {Object} 用户信息

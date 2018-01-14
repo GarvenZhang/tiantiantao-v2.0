@@ -46,7 +46,7 @@ exports.put = async ctx => {
   const postData = ctx.filteredData
   await mysqlModule.queryConnection('UPDATE User SET password = ? AND name = ? AND sex = ? WHERE idUser = ?', [postData.password, postData.name, postData.sex, postData.idUser])
     .then(async result => {
-      ctx.resbody = baseTips['00']
+      session.put(result.idUser, result)
     })
     .catch(error => {
       console.log(`添加类别error：${error}`)

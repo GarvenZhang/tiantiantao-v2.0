@@ -1,9 +1,9 @@
 module.exports = {
   dbOptions: {
-    host: 'localhost',
+    host: '123.207.121.188',
     port: 3306,
     database: 'tiantiantao',
-    user: 'root',
+    user: 'garven',
     password: '970226'
   },
   baseModel: {
