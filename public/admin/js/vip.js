@@ -1,16 +1,4 @@
 const doc = document
-const modifyModal = document.getElementById(`modifyTypeModal`)
-const addModal = document.getElementById(`addTypeModal`)
-
-// 增加类别
-modal({
-  modal: document.getElementById('addTypeModal'),
-  target: document.getElementById('js-add-type'),
-  draggable: true
-})
-
-
-
 
 doc.onclick = function (e) {
   const target = e.target
@@ -19,49 +7,37 @@ doc.onclick = function (e) {
   if (id.includes('js-seach')) {
 
   }
-  else if (id === 'js-add-sure') {
-    addType(addModal)
+  else if (id.includes('js-cancel-vip')) {
+    const idUser = id.split('-')[3]
+    console.log(idUser)
+
+    cancelOrReleaseVip(idUser, 0)
   }
-  else if (id === 'js-modify-sure') {
-    const id = modifyModal.getAttribute('data-id')
-    modifyType(parseInt(id), modifyModal)
-  }
-  else if (id.includes('js-modify')) {
-    const idCategory = id.split('-')[2]
-    modifyModal.classList.remove('hide')
-    modifyModal.setAttribute('data-id', idCategory)
-    modal({
-      modal: modifyModal,
-      target: document.getElementById(`js-modify-${idCategory}`),
-      draggable: true
-    })
-  }
-  else if (id.includes('js-del')) {
-    const idCategory = id.split('-')[2]
-    delType(parseInt(idCategory))
+  else if (id.includes('js-release-vip')) {
+    const idUser = id.split('-')[3]
+    cancelOrReleaseVip(idUser, 1)
   }
 
 }
 
 /**
- * 添加类别
+ * 冻结/解冻 vip
  */
-function addType (modal) {
-  const addForm = doc.getElementById('addForm')
+function cancelOrReleaseVip (id, isVip) {
   ajax({
-    method: 'post',
-    url: '/v1/category',
+    method: 'put',
+    url: `/v1/user/${id}/vip`,
     data: JSON.stringify({
-      name: addForm['type'].value.trim()
+      isVip: isVip
     }),
     fn: function (data) {
       const result = JSON.parse(data)
+      let str = isVip? '冻结': '解冻'
       if (result.status === 'success') {
-        alert('添加类别成功')
-        modal.classList.add('hide')
+        alert(`${str}成功`)
         updateTable(result.data)
       } else {
-        alert('添加类别失败' + result.message)
+        alert(`${str}失败` + result.message)
       }
     }
   })

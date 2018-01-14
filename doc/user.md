@@ -10,7 +10,7 @@
 |/v1/user/:id/vip    |PUT    |解冻/冻结vip   |
 |/v1/user/vip    |POST    |升级为vip   |
 ---
-
+``
 ## 用户完整版信息 UserInfo
 
 ```json

@@ -25,13 +25,13 @@
     <div class="content">
         <!-- 商品管理 -->
         <div class="goods-wrapper">
-            <% for (var item in data){ console.log(data)%>
+            <% for (let item of data.data){%>
                 <div class="goods-item" data-id="<%=item.id%>">
                     <div class="item-inner">
                         <img src="<%=item.bigImg%>" class="item-img">
                         <p class="item-des"><%=item.description%></p>
                         <p class="item-price">￥ <%=item.price%></p>
-                        <span class="del" data-id="<%=item.id%>">x</span>
+                        <span class="del" data-id="<%=item.idGoods%>">x</span>
                     </div>
                 </div>
             <%}%>

@@ -31,16 +31,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="javascript:;" class="operation">被解冻</a></td>
-                    </tr>
+                    <% for (let item of data.data) { console.log(item)%>
+                        <tr>
+                            <td><%=item.account%></td>
+                            <td><%=item.name%></td>
+                            <td><%=item.isVip?'会员': '不是会员'%></td>
+                            <td>
+                                <%if (item.isVip) {%>
+                                    <a href="javascript:;" class="operation" id="js-cancel-vip-<%=item.idUser%>">冻结会员</a>
+                                <%} else {%>
+                                    <a href="javascript:;" class="operation" id="js-release-vip-<%=item.idUser%>">解冻会员</a>
+                                <%}%>
+                            </td>
+                        </tr>
+                    <%}%>
                 </tbody>
             </table>
         </div>
     </div>
 </main>
+<script src="/public/common/common.js"></script>
+<script src="/public/admin/js/vip.js"></script>
 </body>
 </html>
