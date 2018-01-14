@@ -9,7 +9,7 @@ exports.add = async ctx => {
   await mysqlModule.queryConnection('INSERT INTO Category(name) VALUES(?)', [postData.name])
     .then(async result => {
       await Cache.setDefaultModel('categoryModel')
-      ctx.resbody = Cache.getModel('categoryModel')
+      ctx.resbody = await Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`添加类别error：${error}`)
@@ -41,7 +41,7 @@ exports.delete = async ctx => {
   await mysqlModule.queryConnection(`DELETE FROM Category WHERE idCategory = ?`, [id])
     .then(async result => {
       await Cache.checkDefaultModel('categoryModel', id)
-      ctx.resbody = Cache.getModel('categoryModel')
+      ctx.resbody = await Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`删除类别出错：${error}`)
@@ -58,7 +58,7 @@ exports.put = async ctx => {
   await mysqlModule.queryConnection(`UPDATE Category SET name = ? WHERE idCategory = ?`, [postData.name, postData.id])
     .then(async result => {
       await Cache.checkDefaultModel('categoryModel', postData.id)
-      ctx.resbody = Cache.getModel('categoryModel')
+      ctx.resbody = await Cache.getModel('categoryModel')
     })
     .catch(error => {
       console.log(`修改类别出错：${error}`)

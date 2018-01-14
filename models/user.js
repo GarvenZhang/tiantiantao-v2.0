@@ -29,7 +29,12 @@ exports.login = async ctx => {
  */
 exports.register = async ctx => {
   const postData = ctx.filteredData
-  await mysqlModule.queryConnection('INSERT INTO User(account, password, name, sex) VALUES(?, ?, ?, ?)', [postData.account, postData.password, postData.name, postData.sex])
+  let sql = `
+    INSERT INTO User(account, password, name, sex) VALUES(${postData.account}, ${postData.password}, ${postData.name}, ${postData.sex});
+    SET @lastId = (SELECT @@IDENTITY);
+    INSERT INTO ShoppingCart(idShoppingCart) VALUES(@lastId);
+  `
+  await mysqlModule.queryConnection(sql)
     .then(async result => {
       ctx.resbody = baseTips['00']
     })

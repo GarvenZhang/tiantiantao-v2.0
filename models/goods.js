@@ -14,7 +14,7 @@ exports.add = async ctx => {
   ])
     .then(async result => {
       await Cache.setDefaultModel('goodsModel')
-      ctx.resbody = Cache.getModel('goodsModel')
+      ctx.resbody = await Cache.getModel('goodsModel')
     })
     .catch(error => {
       console.log(`添加商品error：${error}`)
@@ -75,7 +75,7 @@ exports.delete = async ctx => {
   await mysqlModule.queryConnection(`DELETE FROM Goods WHERE idGoods = ?`, [id])
     .then(async result => {
       await Cache.checkDefaultModel('goodsModel', id)
-      ctx.resbody = Cache.getModel('goodsModel')
+      ctx.resbody = await Cache.getModel('goodsModel')
     })
     .catch(error => {
       console.log(`删除商品出错：${error}`)
@@ -93,7 +93,7 @@ exports.put = async ctx => {
   )
     .then(async result => {
       await Cache.checkDefaultModel('goodsModel', postData.id)
-      ctx.resbody = Cache.getModel('goodsModel')
+      ctx.resbody = await Cache.getModel('goodsModel')
     })
     .catch(error => {
       console.log(`修改商品出错：${error}`)
@@ -121,7 +121,7 @@ exports.addImg = async ctx => {
     await mysqlModule.queryConnection(`INSERT INTO SmImgSrc(src, Goods_idGoods) VALUES(?, ?)`, [filename, id])
       .then(async result => {
         await Cache.checkDefaultModel('goodsModel', id)
-        ctx.resbody = Cache.getModel('goodsModel')
+        ctx.resbody = await Cache.getModel('goodsModel')
       })
       .catch(error => {
         console.log(`存放大图src错误：${error}`)
@@ -131,7 +131,7 @@ exports.addImg = async ctx => {
     await mysqlModule.queryConnection(`UPDATE Goods SET bigImgSrc = ? WHERE id = ?`, [filename, id])
       .then(async result => {
         await Cache.checkDefaultModel('goodsModel', id)
-        ctx.resbody = Cache.getModel('goodsModel')
+        ctx.resbody = await Cache.getModel('goodsModel')
       })
       .catch(error => {
         console.log(`存放小图src错误：${error}`)

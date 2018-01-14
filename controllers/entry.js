@@ -1,8 +1,3 @@
-// middlewares
-let Formvalidate = require('../middlewares/formvalidate')
-// models
-let categoryModel = require('../models/category')
-
 /**
  * 登陆
  */
