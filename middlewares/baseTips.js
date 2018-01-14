@@ -157,6 +157,12 @@ module.exports = {
     'message': '**不能为空！', // ** 可替换
     'statusCode': 400
   },
+  '401': {
+    'status': 'failed',
+    'retCode': '401',
+    'message': '未授权！',
+    'statusCode': 401
+  },
   '500': {
     'status': 'failed',
     'retCode': '500',

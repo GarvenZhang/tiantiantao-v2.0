@@ -20,7 +20,8 @@ module.exports = {
    * @param {String} modelName 模型名称
    * @return {Object} 模型值
    */
-  getModel (modelName) {
+  async getModel (modelName) {
+    await this.setDefaultModel(modelName)
     return this.data[modelName]
   },
   /**

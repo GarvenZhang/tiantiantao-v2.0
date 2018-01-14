@@ -84,7 +84,6 @@ exports.get = async ctx => {
     })
   }
   await goodsModel.get(ctx)
-
 }
 
 /**
