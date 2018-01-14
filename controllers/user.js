@@ -33,14 +33,66 @@ exports.login = async ctx => {
  * 注册
  */
 exports.register = async ctx => {
+  let postData = ctx.reqbody
+  // 检验
+  let ret = Formvalidate([{
+    value: postData.account,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.password,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.name,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.sex,
+    type: ['notNull'],
+    code: ['16']
+  }])
+  if (typeof ret === 'object') {
+    ctx.resbody = ret
+    return
+  }
+  ctx.filter(postData)
 
+  // model
+  userModel.register(ctx)
 }
 
 /**
  * 修改资料
  */
 exports.put = async ctx => {
+  let postData = ctx.reqbody
+  // 检验
+  let ret = Formvalidate([{
+    value: postData.password,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.name,
+    type: ['notNull'],
+    code: ['16']
+  }, {
+    value: postData.sex,
+    type: ['notNull'],
+    code: ['16']
+  }])
+  if (typeof ret === 'object') {
+    ctx.resbody = ret
+    return
+  }
+  // 从session中获取idUser
+  const idUser = session.getSession(ctx.headers['cookie']).idUser
+  ctx.filter(Object.assign(postData, {
+    idUser
+  }))
 
+  // model
+  userModel.put(ctx)
 }
 
 /**
