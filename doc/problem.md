@@ -88,3 +88,7 @@ delete之前会有OPTIONS预请求
 
 
 使用外键？还是用`[1， 2， 4]` : 数量多的时候不用外键，少的时候可以用
+
+初始化的时候有引用类型： JSON.parse(JSON.stringify(data))
+
+== 与 ===, 若是数字，一定要用parseInt

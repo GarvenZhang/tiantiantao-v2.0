@@ -59,5 +59,5 @@ exports.put = async ctx => {
     return
   }
   // model
-  categoryModel.put(ctx)
+  await categoryModel.put(ctx)
 }

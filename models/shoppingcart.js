@@ -10,14 +10,22 @@ let fsModule = require('../middlewares/fsModule')
 exports.add = async ctx => {
   const postData = ctx.filteredData
   let sql = `
+    SET @goods = (SELECT goods FROM ShoppingCart WHERE idShoppingCart = ${postData.idUser});
     UPDATE ShoppingCart SET goods = (
-      CONCAT((SELECT goods WHERE idShoppingCart = 1), ',', ${postData.goodsId})
+      IF(@goods IS NULL, ${postData.goodsId}, CONCAT(@goods, ',', ${postData.goodsId}))
     ) WHERE idShoppingCart = ${postData.idUser};
-    SELECT goods WHERE idShoppingCart = 1;
+    SET @updatedGoods = (SELECT goods FROM ShoppingCart WHERE idShoppingCart = ${postData.idUser});
+    SET @sta = CONCAT(
+      'SELECT * FROM Goods WHERE idGoods IN (',
+        'select ', replace(@goods, ',' ,'  union all select '), ' AS name',
+      ')
+    ');
+    PREPARE sta FROM @sta ;
+    EXECUTE sta;
   `
   await mysqlModule.queryConnection(sql)
     .then(async result => {
-      ctx.resbody = baseTips['09']
+      ctx.resbody = result
     })
     .catch(error => {
       console.log(`添加商品error：${error}`)
@@ -33,10 +41,9 @@ exports.clear = async ctx => {
   let sql = `
     UPDATE ShoppingCart SET goods = '' WHERE idShoppingCart = ${postData.idUser};
   `
-  // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
-      ctx.resbody = Cache.addBaseModel(result)
+      ctx.resbody = baseTips['09']
     })
     .catch(error => {
       console.log(`查询商品出错：${error}`)

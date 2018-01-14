@@ -4,7 +4,8 @@ const cache = require('../middlewares/cache')
  */
 exports.goods = async ctx => {
   ctx.render('/admin/goods', {
-    data: await cache.getModel('goodsModel')
+    goods: await cache.getModel('goodsModel'),
+    category: await cache.getModel('categoryModel')
   })
 }
 /**
