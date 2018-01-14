@@ -1,5 +1,6 @@
 // middlewares
 let Formvalidate = require('../middlewares/formvalidate')
+let baseTips = require('../middlewares/baseTips')
 let session = require('../middlewares/session')
 // models
 let userModel = require('../models/user')
@@ -96,17 +97,20 @@ exports.put = async ctx => {
 }
 
 /**
- * 查看会员
- */
-exports.getVip = async ctx => {
-
-}
-
-/**
  * 解冻/冻结vip
  */
 exports.putVip = async ctx => {
-
+  let postData = ctx.reqbody
+  let idUser = ctx.aUrlParam[0]
+  // 从session中获取idUser
+  const account = session.getSession(ctx.headers['cookie']).account
+  if (account !== 'admin') {
+    ctx.resbody = baseTips['401']
+    return
+  }
+  ctx.filter(postData)
+  // model
+  userModel.putVip(ctx)
 }
 
 /**

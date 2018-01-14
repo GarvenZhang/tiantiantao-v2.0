@@ -52,10 +52,11 @@ express.fn = express.prototype = {
       // 请求url的判断
       // 排除/favicon.ico
       if (pathname == '/favicon.ico') {
-      // 首页html文件
-      } else if (pathname == '/index' || pathname == '/') {
-        // router.goIndex(ctx)
-      // 接口api
+        // 首页html文件
+        // } else if (pathname == '/index' || pathname == '/') {
+        //   // router.goIndex(ctx)
+        // // 接口api
+        // }
       } else if (isReqReg.test(pathname)) {
         router.dealWithAPI(ctx)
       // 其它静态资源请求

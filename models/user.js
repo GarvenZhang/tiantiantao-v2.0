@@ -53,3 +53,18 @@ exports.put = async ctx => {
       ctx.resbody = baseTips['081']
     })
 }
+
+/**
+ * 解冻/冻结vip
+ */
+exports.putVip = async ctx => {
+  const postData = ctx.filteredData
+  await mysqlModule.queryConnection('UPDATE User SET isVip = ? WHERE idUser = ', [postData.password, postData.name, postData.sex, postData.idUser])
+    .then(async result => {
+      session.put(result.idUser, result)
+    })
+    .catch(error => {
+      console.log(`添加类别error：${error}`)
+      ctx.resbody = baseTips['081']
+    })
+}
