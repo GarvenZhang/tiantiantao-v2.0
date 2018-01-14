@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="/public/common/reset.css">
+    <link rel="stylesheet" href="/public/admin/css/public.css">
+    <link rel="stylesheet" href="/public/libs/modal/style.css">
+    <link rel="stylesheet" href="/public/admin/css/order.css">
+
+</head>
+<body>
+<!-- 导航栏及标题 -->
+<%- include sidebar %>
+
+<!-- 主体内容 -->
+<main class="main">
+    <div class="content-header">
+        <div class="search-area">
+            <input type="text" placeholder="查找订单" class="input">
+            <a href="javascript:;" class="search-btn">🔍</a>
+        </div>
+    </div>
+    <div class="content">
+        <!-- 订单管理 -->
+        <div class="order-wrapper table-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a href="javascript:;" class="operation">执行</a>
+                        <a href="javascript:;" class="operation" id="js-check-order" data-target="#orderModal">查看</a>
+                        <a href="javascript:;" class="operation">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+
+<!-- 订单modal -->
+<div class="modal hide" id="orderModal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">查看订单</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <div class="order-item">
+                    <div class="order-ti">订单号：</div>
+                    <div class="order-val">1000000000</div>
+                </div>
+                <div class="order-item">
+                    <div class="order-ti">顾客：</div>
+                    <div class="order-val">张一明</div>
+                </div>
+                <div class="order-item">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>商品名称</th>
+                            <th>数量</th>
+                            <th>单价/RMB</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="order-item">
+                    <div class="order-ti">总价：</div>
+                    <div class="order-val">1000￥</div>
+                </div>
+                <div class="order-item">
+                    <div class="order-ti">地址：</div>
+                    <div class="order-val">大学</div>
+                </div>
+                <div class="order-item">
+                    <div class="order-ti">邮编：</div>
+                    <div class="order-val">528100</div>
+                </div>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn">确定</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+
+<script src="/public/libs/modal/modal.js"></script>
+<script>
+  // 查看订单
+  modal({
+    modal: document.getElementById('orderModal'),
+    target: document.getElementById('js-check-order'),
+    draggable: true
+  })
+</script>
+</body>
+</html>
+

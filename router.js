@@ -42,6 +42,6 @@ module.exports = app => {
   // cms
   app.get('/admin/goods', AdminController.goods)
   app.get('/admin/vip', AdminController.vip)
-  app.get('/admin/type', AdminController.type)
+  app.get('/admin/category', AdminController.type)
   app.get('/admin/orderForm', AdminController.orderForm)
 }
