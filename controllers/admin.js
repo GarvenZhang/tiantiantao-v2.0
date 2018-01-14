@@ -4,7 +4,7 @@ const cache = require('../middlewares/cache')
  */
 exports.goods = async ctx => {
   ctx.render('/admin/goods', {
-    data: cache.getModel('goodsModel')
+    data: await cache.getModel('goodsModel')
   })
 }
 /**
@@ -12,7 +12,7 @@ exports.goods = async ctx => {
  */
 exports.vip = async ctx => {
   ctx.render('/admin/vip', {
-    data: cache.getModel('userModel')
+    data: await cache.getModel('userModel')
   })
 }
 /**
@@ -20,7 +20,7 @@ exports.vip = async ctx => {
  */
 exports.type = async ctx => {
   ctx.render('/admin/category', {
-    data: cache.getModel('categoryModel')
+    data: await cache.getModel('categoryModel')
   })
 }
 /**
@@ -28,6 +28,6 @@ exports.type = async ctx => {
  */
 exports.orderForm = async ctx => {
   ctx.render('/admin/orderform', {
-    data: cache.getModel('orderFormModel')
+    data: await cache.getModel('orderFormModel')
   })
 }

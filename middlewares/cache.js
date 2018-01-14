@@ -21,7 +21,9 @@ module.exports = {
    * @return {Object} 模型值
    */
   async getModel (modelName) {
-    await this.setDefaultModel(modelName)
+    if (this.data[modelName].length === 0) {
+      await this.setDefaultModel(modelName)
+    }
     return this.data[modelName]
   },
   /**
@@ -33,7 +35,7 @@ module.exports = {
     const tableName = this.relation[modelName]
     const pageMinNum = this.dataMinNum
     // 存在但不到一页，则增加model中的data
-    if (this.getModel(modelName).data.length <= pageMinNum) {
+    if (this.data[modelName].data.length <= pageMinNum) {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
           this.setModel(modelName, result)

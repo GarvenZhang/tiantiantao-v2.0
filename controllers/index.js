@@ -12,7 +12,7 @@ exports.index = async ctx => {
  */
 exports.list = async ctx => {
   ctx.render('/user/list', {
-    data: cache.getModel('goodsModel')
+    data: await cache.getModel('goodsModel')
   })
 }
 /**
@@ -28,7 +28,7 @@ exports.detail = async ctx => {
  */
 exports.shoppingCart = async ctx => {
   ctx.render('/user/shopping-cart', {
-    data: cache.getModel('shoppingCartModel')
+    data: await cache.getModel('shoppingCartModel')
   })
 }
 /**
@@ -36,7 +36,7 @@ exports.shoppingCart = async ctx => {
  */
 exports.orderForm = async ctx => {
   ctx.render('/user/order-form', {
-    data: cache.getModel('orderFormModel')
+    data: await cache.getModel('orderFormModel')
   })
 }
 /**

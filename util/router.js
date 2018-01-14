@@ -174,6 +174,7 @@ async function successAPIHandle (categoryObj, pathname, res, ctx) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   // 数据逻辑处理
   await callback(ctx)
+  console.log(111)
   // 设置状态码
   if (ctx.resbody.statusCode) {
     res.statusCode = ctx.resbody.statusCode
