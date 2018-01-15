@@ -33,19 +33,20 @@ exports.post = async ctx => {
  * 清空购物车
  */
 exports.clear = async ctx => {
-  await shoppingCartModel.get({
+  ctx.filter({
     idUser: session.getSession(ctx.headers['cookie'])
   })
+  await shoppingCartModel.clear(ctx)
 }
 
 /**
  * 删除购物车中的商品
  */
 exports.delete = async ctx => {
-  const id = ctx.aUrlParam[0]
   ctx.filter({
-    id
+    idGoods: ctx.aUrlParam[0],
+    idUser: session.getSession(ctx.headers['cookie'])
   })
   // model
-  await goodsModel.delete(ctx)
+  await shoppingCartModel.delete(ctx)
 }

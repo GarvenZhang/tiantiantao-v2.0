@@ -4,8 +4,8 @@
 |api    |请求方法   |描述     |
 |:------|:---------|:--------|
 |/v1/shoppingcart   |POST   |加入购物车  |
-|/v1/shoppingcart/:id   |DELETE     |清空购物车  |
-|/v1/shoppingcart/:id    |DELETE    |删除购物车中的商品   |
+|/v1/shoppingcart   |DELETE     |清空购物车  |
+|/v1/shoppingcart/:idGoods    |DELETE    |删除购物车中的商品   |
 ---
 
 ## 购物车完整信息 ShoppingCartInfo
@@ -42,15 +42,25 @@ POST /v1/shoppingcart
 
 201，新创建的ShoppingCartInfo
 
-## 删除购物车
+## 清空购物车
 
 ```
-DELETE /v1/shoppingcart/:id
+DELETE /v1/shoppingcart
+```
+
+`返回`
+
+204 无返回信息
+
+## 删除购物车中的商品
+
+```
+DELETE /v1/shoppingcart/:idGoods
 ```
 
 `请求参数`
 
-id为购物车id
+idGoods为商品id
 
 `返回`
 

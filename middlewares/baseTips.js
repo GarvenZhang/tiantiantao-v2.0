@@ -139,7 +139,7 @@ module.exports = {
     'message': '超过范围！',
     'statusCode': 416
   },
-  '14': {
+  '200': {
     'status': 'success',
     'retCode': '14',
     'message': '获取成功！',
