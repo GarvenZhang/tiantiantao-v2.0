@@ -92,3 +92,7 @@ delete之前会有OPTIONS预请求
 初始化的时候有引用类型： JSON.parse(JSON.stringify(data))
 
 == 与 ===, 若是数字，一定要用parseInt
+
+分不分页，与模型的建立有很大的联系
+
+错误处理

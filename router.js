@@ -1,6 +1,7 @@
 const GoodsController = require('./controllers/goods')
 const CategoryController = require('./controllers/category')
 const ShoppingCartController = require('./controllers/shoppingcart')
+const OrderFormController = require('./controllers/orderform')
 const EntryController = require('./controllers/entry')
 const IndexController = require('./controllers/index')
 const AdminController = require('./controllers/admin')
@@ -18,7 +19,10 @@ module.exports = app => {
   app.delete('/v1/category/:id', CategoryController.delete)
   app.put('/v1/category', CategoryController.put)
   // 订单模块
-
+  app.post('/v1/orderform', OrderFormController.post)
+  app.put('/v1/orderform/:id', OrderFormController.put)
+  app.get('/v1/orderform/:id', OrderFormController.get)
+  app.delete('/v1/orderform/:id', OrderFormController.delete)
   // 购物车模块
   app.post('/v1/shoppingcart', ShoppingCartController.post)
   app.delete('/v1/shoppingcart', ShoppingCartController.clear)
@@ -40,6 +44,7 @@ module.exports = app => {
   app.get('/detail?:id', IndexController.detail)
   app.get('/shopping-cart?:id', IndexController.shoppingCart)
   app.get('/order-form?:id', IndexController.orderForm)
+  app.get('/order-form/success', IndexController.orderFormSuccess)
   app.get('/info/userInfo', IndexController.userInfo)
   app.get('/info/orderFormInfo', IndexController.orderFormInfo)
   // cms

@@ -13,14 +13,15 @@
 
 ```
 {
-  "id": 1,
+  "idGoods": 1,
+  "user": "garven"
   "phone": 15622178496,
   "address": "广工",
-  "postage": 5,
+  "fare": 5,
   "total": 167,
-  "shoppingcart_id": 8,
-  "balanceStatus": 0,
-  "executeStatus": 0
+  "recipients": "garven",
+  "postcodes": "521511",
+  "status": "未执行"
 }
 ```
 
@@ -65,9 +66,8 @@ POST /v1/shoppingcart
 |:------|:---------|:--------|
 |phone   |手机号码   |必传, 数值  |
 |address   |收货地址   |必传  |
-|postage   |邮费   |必传, 数值  |
-|phone   |手机号码   |必传, 数值  |
-|shoppingcart_id   |购物车id   |必传, 数值  |
+|recipients   |收件人   |必传  |
+|postcodes   |邮编   |必传, 数值  |
 ---
 
 `返回`
