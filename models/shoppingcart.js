@@ -1,8 +1,5 @@
-const path = require('path')
 const baseTips = require('../middlewares/baseTips')
-let Cache = require('../middlewares/cache')
 let mysqlModule = require('../middlewares/mysqlModule')
-let fsModule = require('../middlewares/fsModule')
 
 /**
  * 加入购物车
@@ -10,14 +7,26 @@ let fsModule = require('../middlewares/fsModule')
 exports.add = async ctx => {
   const postData = ctx.filteredData
   let sql = `
-    UPDATE ShoppingCart SET goods = (
-      CONCAT((SELECT goods WHERE idShoppingCart = 1), ',', ${postData.goodsId})
-    ) WHERE idShoppingCart = ${postData.idUser};
-    SELECT goods WHERE idShoppingCart = 1;
+    -- 获取原来的值
+    SET @goods = (SELECT goods FROM ShoppingCart WHERE idShoppingCart = ${postData.idUser});
+    -- 判断，更新
+    SET @ret = IF(@goods IS NULL, ${postData.goodsId}, CONCAT(@goods, ',', ${postData.goodsId}))
+    UPDATE ShoppingCart SET goods = @ret WHERE idShoppingCart = ${postData.idUser};
+    -- 获取更新后的值
+    SET @sta = CONCAT(
+      'SELECT * FROM Goods WHERE idGoods IN (',
+        'select ', replace(@ret, ',' ,'  union all select '), ' AS name',
+      ')
+    ');
+    -- 执行
+    PREPARE sta FROM @sta ;
+    EXECUTE sta;
   `
   await mysqlModule.queryConnection(sql)
     .then(async result => {
-      ctx.resbody = baseTips['09']
+      let baseModel = JSON.parse(JSON.stringify(baseTips['200']))
+      baseModel.data = result
+      ctx.resbody = baseModel
     })
     .catch(error => {
       console.log(`添加商品error：${error}`)
@@ -33,10 +42,9 @@ exports.clear = async ctx => {
   let sql = `
     UPDATE ShoppingCart SET goods = '' WHERE idShoppingCart = ${postData.idUser};
   `
-  // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
-      ctx.resbody = Cache.addBaseModel(result)
+      ctx.resbody = baseTips['09']
     })
     .catch(error => {
       console.log(`查询商品出错：${error}`)
@@ -49,11 +57,36 @@ exports.clear = async ctx => {
  */
 exports.delete = async ctx => {
   const postData = ctx.filteredData
-  const id = postData.id
-  await mysqlModule.queryConnection(`DELETE FROM Goods WHERE idGoods = ?`, [id])
+  const idGoods = postData.idGoods
+  const idUser = postData.idUser
+  let sql = `
+    -- 获取原来的值
+    SET @goods = (SELECT goods FROM ShoppingCart WHERE idShoppingCart = 1);
+    -- 判断，更新
+    SET @ret = IF(
+        (INSTR(@goods, ${idGoods}) = 1) AND (LENGTH(${idGoods}) = LENGTH(@goods)),
+        REPLACE(@goods, ${idGoods}, ''), 
+        IF(
+          INSTR(@goods, ${idGoods}) = (LENGTH(@goods) - LENGTH(${idGoods}) + 1),
+            REPLACE(@goods, CONCAT(',' , ${idGoods}), ''),
+          REPLACE(@goods, CONCAT(${idGoods}, ','), '')
+        )
+      );
+    UPDATE ShoppingCart SET goods = @ret WHERE idShoppingCart = ${idUser};
+    -- 获取更新后的值
+    SET @sta = CONCAT(
+      'SELECT * FROM Goods WHERE idGoods IN (',
+      'select ', replace(@ret, ',' ,'  union all select '), ' AS name',
+      ')');
+    -- 执行
+    PREPARE sta FROM @sta ;
+    EXECUTE sta;
+  `
+  await mysqlModule.queryConnection(sql)
     .then(async result => {
-      await Cache.checkDefaultModel('goodsModel', id)
-      ctx.resbody = await Cache.getModel('goodsModel')
+      let baseModel = JSON.parse(JSON.stringify(baseTips['200']))
+      baseModel.data = result
+      ctx.resbody = baseModel
     })
     .catch(error => {
       console.log(`删除商品出错：${error}`)
