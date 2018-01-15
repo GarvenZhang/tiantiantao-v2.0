@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天淘</title>
+    <link rel="stylesheet" type="text/css" href="/public/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/user/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/public/user/css/categories.css">
+    <link rel="stylesheet" type="text/css" href="/public/user/css/user.css">
+</head>
+<body>
+<!-- 头部 -->
+<% include header %>
+
+<div class="content">
+    <aside class="aside">
+        <nav class="nav">
+            <h2 class="nav-tt">用户中心</h2>
+            <ul class="list" id="type-list">
+                <li class="list-item"><a href="javascript:;" class="item-link" id="modifyPsw">修改密码</a></li>
+                <li class="list-item"><a href="javascript:;" class="item-link" id="modifyMobile">修改信息</a></li>
+                <li class="list-item"><a href="javascript:;" class="item-link" id="modifyAddress">订单查询</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="main">
+        <!-- 修改密码 -->
+        <section class="content-section">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">修改密码</h2>
+            </div>
+            <div class="section-wrapper clearfix" id="user-center-area">
+                <form class="form">
+                    <div class="form-item clearfix">
+                        <label class="form-label">旧密码</label><input type="password" name="oldPsw" class="form-input">
+                    </div>
+                    <div class="form-item clearfix">
+                        <label class="form-label">新密码</label><input type="password" name="newPsw" class="form-input">
+                    </div>
+                    <div class="form-item clearfix">
+                        <label class="form-label">再次确认密码</label><input type="password" name="surePsw" class="form-input">
+                    </div>
+                    <div class="form-item clearfix">
+                        <button class="form-btn" type="button" id="js-sure">确认</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- 修改信息 -->
+        <section class="content-section">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">修改信息</h2>
+            </div>
+            <div class="section-wrapper clearfix">
+                <form class="form">
+                    <div class="form-item clearfix">
+                        <label class="form-label">手机号码</label><input type="password" name="oldPsw" class="form-input">
+                    </div>
+                    <div class="form-item clearfix">
+                        <label class="form-label">地址</label><input type="password" name="newPsw" class="form-input">
+                    </div>
+                    <div class="form-item clearfix">
+                        <button class="form-btn" type="button" id="js-sure">确认</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

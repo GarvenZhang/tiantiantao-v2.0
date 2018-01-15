@@ -58,6 +58,10 @@ exports.put = async ctx => {
     ctx.resbody = ret
     return
   }
+  ctx.filter({
+    idCategory: postData.id,
+    name: postData.name
+  })
   // model
   await categoryModel.put(ctx)
 }

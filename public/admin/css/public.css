@@ -39,6 +39,9 @@
     margin-left: 260px;
     background: white;
 }
+.content {
+    background: white;
+}
 .content-header {
     padding: 10px;
     border-bottom: 1px solid black;

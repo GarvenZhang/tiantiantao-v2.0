@@ -13,6 +13,7 @@ module.exports = {
    * @param {String} modelValue 模型值
    */
   setModel (modelName, modelValue) {
+    console.log(this.data[modelName])
     this.data[modelName].data = modelValue
   },
   /**
@@ -21,6 +22,9 @@ module.exports = {
    * @return {Object} 模型值
    */
   async getModel (modelName) {
+
+    if (this.data[modelName].data.length === 0) {
+      console.log(modelName)
     if (this.data[modelName].data.length === 0) {
       await this.setDefaultModel(modelName)
     }
@@ -38,7 +42,11 @@ module.exports = {
     if (this.data[modelName].data.length <= pageMinNum) {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
+          console.log(tableName, modelName)
+          console.log(this.data)
           this.setModel(modelName, result)
+          console.log(this.data)
+
         })
     }
   },
@@ -53,6 +61,11 @@ module.exports = {
     const pageMinNum = this.dataMinNum
     // 若修改的id在model中能找到
     const isChanged = this.data[modelName].data.some(item => {
+
+      for (var attr in item) {
+        if (/^(id\w*$)/.test(attr)) {
+          console.log(RegExp.$1, item[RegExp.$1], id)
+
       // 不同模型中id的叫法不同
       for (var attr in item) {
         if (/^(id|id\w*)$/.test(attr)) {
@@ -60,6 +73,9 @@ module.exports = {
         }
       }
     })
+
+    console.log(`isChanged:${isChanged}`)
+
     if (isChanged) {
       // 更新
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
@@ -96,7 +112,7 @@ module.exports = {
     // 设置baseModel
     this.baseModel = baseModel
     for (var attr in modelRelationWithTable) {
-      this.data[attr] = baseModel
+      this.data[attr] = JSON.parse(JSON.stringify(baseModel))
     }
     // 挂载mysql模块
     this.mysqlModule = mysqlModule

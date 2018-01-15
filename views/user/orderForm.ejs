@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天天淘</title>
+    <link rel="stylesheet" type="text/css" href="/public/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="/public/user/css/style.css">
+</head>
+<body>
+<!-- 头部 -->
+<% include header %>
+
+<div class="content">
+    <main class="main">
+        <section class="content-section section--goodsShow">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">商品分类</h2>
+            </div>
+            <div class="section-wrapper clearfix" id="categories">
+                <ul class="goods-type-list">
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="content-section section--commendedGoods">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">推荐商品</h2><a href="/src/product-feature.html" class="more">查看更多</a>
+            </div>
+            <div class="section-wrapper clearfix" id="commendGoods">
+                <div class="section-item">
+                    <div class="item-img-wrapper">
+                        <img class="item-img" src="./imgs/timg.gif">
+                    </div>
+                    <div class="item-detail-wrapper">
+                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
+                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content-section section--discountGoods">
+            <div class="section-header clearfix">
+                <h2 class="header-ti">特价商品</h2><a href="/src/specials.html" class="more">查看更多</a>
+            </div>
+            <div class="section-wrapper clearfix" id="discountGoods">
+                <div class="section-item">
+                    <div class="item-img-wrapper">
+                        <img class="item-img" src="./imgs/timg.gif">
+                    </div>
+                    <div class="item-detail-wrapper">
+                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
+                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+<div class="tool-bar">
+    <div class="clearfix">
+        <div class="select-all">
+            <input type="checkbox" class="js-select-all">全选
+        </div>
+        <div class="options">
+            <a href="javascript:;" class="clearCart">清空购物车</a>
+        </div>
+        <div class="float-bar-right clearfix">
+            <div class="amount-sum clearfix">
+                <span class="txt">已选商品</span>
+                <em class="total-amount">0</em>
+                <span class="txt">件</span>
+            </div>
+            <div class="price-sum clearfix">
+                <span class="txt">合计</span>
+                <strong class="price">
+                    <span class="price-sign">￥</span>
+                    <em class="total-symbol">0.00</em>
+                </strong>
+            </div>
+            <div class="btn-area">
+                <button type="button" id="js-settle-account">结算</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/src/js/common.js"></script>
+<script type="text/javascript" src="/src/js/user.js"></script>
+<script type="text/javascript" src="/src/js/shoppingCart.js"></script>
+</body>
+</html>
