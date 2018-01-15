@@ -93,6 +93,7 @@ exports.put = async ctx => {
   )
     .then(async result => {
       await Cache.checkDefaultModel('goodsModel', postData.id)
+      console.log(await Cache.getModel('goodsModel'))
       ctx.resbody = await Cache.getModel('goodsModel')
     })
     .catch(error => {

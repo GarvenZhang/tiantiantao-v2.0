@@ -3,10 +3,13 @@ const cache = require('../middlewares/cache')
  * 商品管理
  */
 exports.goods = async ctx => {
+
   ctx.render('/admin/goods', {
     goods: await cache.getModel('goodsModel'),
     category: await cache.getModel('categoryModel')
   })
+  console.log('hhhhh')
+  console.log(await cache.getModel('categoryModel'))
 }
 /**
  * 会员管理
@@ -16,6 +19,7 @@ exports.vip = async ctx => {
     data: await cache.getModel('userModel')
   })
 }
+
 /**
  * 类别管理
  */

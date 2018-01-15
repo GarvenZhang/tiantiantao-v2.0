@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理</title>
+    <link rel="stylesheet" href="/public/common/reset.css">
+    <link rel="stylesheet" href="/public/admin/css/public.css">
+    <link rel="stylesheet" href="/public/libs/modal/style.css">
+    <link rel="stylesheet" href="/public/admin/css/goods.css">
+
+</head>
+<body>
+<!-- 导航栏及标题 -->
+<%- include sidebar %>
+
+<!-- 主体内容 -->
+<main class="main">
+    <div class="content-header">
+        <button type="button" class="btn" id="js-add-goods" data-target="#addGoodsModal">增加商品</button>
+        <div class="search-area">
+            <input type="text" placeholder="查找商品" class="input">
+            <a href="javascript:;" class="search-btn">🔍</a>
+        </div>
+    </div>
+    <div class="content">
+        <!-- 商品管理 -->
+        <div class="goods-wrapper" id="goodsWrapper">
+            <% for (let item of goods.data){%>
+                <div class="goods-item" data-id="<%=item.idGods%>">
+                    <div class="item-inner">
+                        <img src="<%=item.bigImg%>" class="item-img">
+                        <p class="item-des"><%=item.description%></p>
+                        <p class="item-price">￥ <%=item.price%></p>
+                        <span class="del" id='js-del-<%=item.idGoods%>'>x</span>
+                        <span class="modify" id='js-modify-<%=item.idGoods%>'>m</span>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+    </div>
+    <script src="/public/common/ejs.js"></script>
+</main>
+
+<!-- 增加商品modal -->
+<div class="modal hide" id="addGoodsModal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">增加商品</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <form class="form" id="addForm">
+                    <label class="form-label">名称：<input type="text" class="form-input" name="name"></label>
+                    <label class="form-label">描述：<input type="text" class="form-input" name="description"></label>
+                    <label class="form-label">价钱：<input type="text" class="form-input" name="price"></label>
+                    <label class="form-label">类别：
+                        <select name="categoryId">
+                            <%for (let item of category.data) {%>
+                                <option value="<%=item.idCategory%>"><%=item.name%></option>
+                            <%}%>
+                        </select>
+                    </label>
+                </form>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn" id="js-add-sure">确定</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+
+<!-- 修改商品modal -->
+<div class="modal hide" id="modifyGoodsModal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">修改商品</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <form class="form" id="modifyForm">
+                    <label class="form-label">名称：<input type="text" class="form-input" name="name"></label>
+                    <label class="form-label">描述：<input type="text" class="form-input" name="description"></label>
+                    <label class="form-label">价钱：<input type="text" class="form-input" name="price"></label>
+                    <label class="form-label">类别：
+                        <select name="categoryId">
+                            <%for (let item of category.data) {%>
+                            <option value="<%=item.idCategory%>"><%=item.name%></option>
+                            <%}%>
+                        </select>
+                    </label>
+                </form>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn" id="js-modify-sure">确定</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+
+<script src="/public/common/common.js"></script>
+<script src="/public/libs/modal/modal.js"></script>
+<script src="/public/admin/js/goods.js"></script>
+</body>
+</html>
+

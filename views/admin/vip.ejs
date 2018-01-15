@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员管理</title>
+    <link rel="stylesheet" href="/public/common/reset.css">
+    <link rel="stylesheet" href="/public/admin/css/public.css">
+</head>
+<body>
+<!-- 导航栏及标题 -->
+<%- include sidebar %>
+
+<!-- 主体内容 -->
+<main class="main">
+    <div class="content-header">
+        <div class="search-area">
+            <input type="text" placeholder="查找会员" class="input">
+            <a href="javascript:;" class="search-btn">🔍</a>
+        </div>
+    </div>
+    <div class="content">
+        <!-- 会员管理 -->
+        <div class="vip-wrapper table-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>会员账号</th>
+                    <th>会员名称</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% for (let item of data.data) { console.log(item)%>
+                        <tr>
+                            <td><%=item.account%></td>
+                            <td><%=item.name%></td>
+                            <td><%=item.isVip?'会员': '不是会员'%></td>
+                            <td>
+                                <%if (item.isVip) {%>
+                                    <a href="javascript:;" class="operation" id="js-cancel-vip-<%=item.idUser%>">冻结会员</a>
+                                <%} else {%>
+                                    <a href="javascript:;" class="operation" id="js-release-vip-<%=item.idUser%>">解冻会员</a>
+                                <%}%>
+                            </td>
+                        </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<script src="/public/common/common.js"></script>
+<script src="/public/admin/js/vip.js"></script>
+</body>
+</html>
