@@ -1,11 +1,11 @@
 const doc = document
-const modifyModal = document.getElementById(`modifyTypeModal`)
-const addModal = document.getElementById(`addTypeModal`)
+const modifyModal = document.getElementById(`modifyGoodsModal`)
+const addModal = document.getElementById(`addGoodsModal`)
 
 // 增加类别
 modal({
-  modal: document.getElementById('addTypeModal'),
-  target: document.getElementById('js-add-type'),
+  modal: document.getElementById('addGoodsModal'),
+  target: document.getElementById('js-add-goods'),
   draggable: true
 })
 
@@ -20,93 +20,103 @@ doc.onclick = function (e) {
 
   }
   else if (id === 'js-add-sure') {
-    addType(addModal)
+    addGoods(addModal)
   }
   else if (id === 'js-modify-sure') {
-    const id = modifyModal.getAttribute('data-id')
-    modifyType(parseInt(id), modifyModal)
+    const idGoods = modifyModal.getAttribute('data-id')
+    modifyGoods(parseInt(idGoods), modifyModal)
   }
   else if (id.includes('js-modify')) {
-    const idCategory = id.split('-')[2]
+    const idGoods = id.split('-')[2]
     modifyModal.classList.remove('hide')
-    modifyModal.setAttribute('data-id', idCategory)
+    modifyModal.setAttribute('data-id', idGoods)
     modal({
       modal: modifyModal,
-      target: document.getElementById(`js-modify-${idCategory}`),
+      target: document.getElementById(`js-modify-${idGoods}`),
       draggable: true
     })
   }
   else if (id.includes('js-del')) {
-    const idCategory = id.split('-')[2]
-    delType(parseInt(idCategory))
+    const idGoods = id.split('-')[2]
+    delGoods(parseInt(idGoods))
   }
 
 }
 
 /**
- * 添加类别
+ * 添加商品
  */
-function addType (modal) {
+function addGoods (modal) {
   const addForm = doc.getElementById('addForm')
+  const date = new Date()
+
   ajax({
     method: 'post',
-    url: '/v1/category',
+    url: '/v1/goods',
     data: JSON.stringify({
-      name: addForm['type'].value.trim()
+      name: addForm['name'].value.trim(),
+      description: addForm['description'].value.trim(),
+      date: `${date.toISOString().slice(0, 10)} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+      price: parseInt(addForm['price'].value.trim()),
+      categoryId: parseInt(addForm['categoryId'].value.trim())
     }),
     fn: function (data) {
       const result = JSON.parse(data)
       if (result.status === 'success') {
-        alert('添加类别成功')
+        alert('添加商品成功')
         modal.classList.add('hide')
-        updateTable(result.data)
+        addForm.reset()
+        updateGoods(result.data)
       } else {
-        alert('添加类别失败' + result.message)
+        alert('添加商品失败' + result.message)
       }
     }
   })
 }
 
 /**
- * 修改类别
+ * 修改商品
  */
-function modifyType (id, modal) {
+function modifyGoods (id, modal) {
   const modifyForm = doc.getElementById('modifyForm')
-
   ajax({
     method: 'put',
-    url: '/v1/category',
+    url: '/v1/goods',
     data: JSON.stringify({
-      name: modifyForm['type'].value.trim(),
-      id: id
+      id: id,
+      name: modifyForm['name'].value.trim(),
+      description: modifyForm['description'].value.trim(),
+      price: parseInt(modifyForm['price'].value.trim()),
+      categoryId: parseInt(modifyForm['categoryId'].value.trim())
     }),
     fn: function (data) {
       const result = JSON.parse(data)
       if (result.status === 'success') {
-        alert('修改类别成功')
+        alert('修改商品成功')
         modal.classList.add('hide')
-        updateTable(result.data)
+        modifyModal.reset()
+        updateGoods(result.data)
       } else {
-        alert('修改类别失败' + result.message)
+        alert('修改商品失败' + result.message)
       }
     }
   })
 }
 
 /**
- * 删除类别
+ * 删除商品
  */
-function delType (id) {
+function delGoods (id) {
   ajax({
     method: 'delete',
-    url: `/v1/category/${id}`,
+    url: `/v1/goods/${id}`,
     fn: function (data) {
       const result = JSON.parse(data)
       if (result.status === 'success') {
-        alert('删除类别成功')
-        updateTable(result.data)
+        alert('删除商品成功')
+        updateGoods(result.data)
       } else {
-        alert('删除类别失败' + result.message)
+        alert('删除商品失败' + result.message)
       }
     }
   })
@@ -129,22 +139,23 @@ function checkType () {
   })
 }
 
-function updateTable (data) {
-  const tBody = document.getElementById('tBody')
+function updateGoods (data) {
+  const goodsWrapper = document.getElementById('goodsWrapper')
 
   let str = ''
 
   for (let item of data) {
     str += `
-    <tr>
-        <td>${item.name}</td>
-        <td>
-            <a href="javascript:;" class="operation" data-target="#modifyTypeModal" id="js-modify-${item.idCategory}">修改</a>
-            <a href="javascript:;" class="operation" id="js-del-${item.idCategory}">删除</a>
-        </td>
-    </tr>
+    <div class="goods-item" data-id="${item.idGoods}">
+        <div class="item-inner">
+            <img src="${item.bigImg}" class="item-img">
+            <p class="item-des">${item.description}</p>
+            <p class="item-price">￥ ${item.price}</p>
+            <span class="del" id="js-del-${item.idGoods}">x</span>
+        </div>
+    </div>
   `
   }
 
-  tBody.innerHTML = str
+  goodsWrapper.innerHTML = str
 }
