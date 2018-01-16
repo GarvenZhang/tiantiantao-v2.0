@@ -1,13 +1,16 @@
 const cache = require('../middlewares/cache')
 let session = require('../middlewares/session')
 const IndexModel = require('../models/index')
+const goodsModel = require('../models/goods')
 /**
  * 官网首页
  */
 exports.index = async ctx => {
   console.log(ctx.pathname)
   ctx.render('/user/index', {
-    data: {}
+    category: await cache.getModel('categoryModel'),
+    recommandGoods: await cache.getModel('goodsModel').slice(0, 4),
+    discountedGoods: await cache.getModel('goodsModel').slice(0, 4)
   })
 }
 /**
@@ -22,8 +25,16 @@ exports.list = async ctx => {
  * 商品详情页
  */
 exports.detail = async ctx => {
+  const aUrlParam = ctx.aUrlParam
+  const name = aUrlParam[0]
+  ctx.filter({
+    id: /^id_(\d)+?$/.exec(name)[1]
+  })
+  // model
+  await goodsModel.get(ctx)
+  // view
   ctx.render('/user/detail', {
-    data: {}
+    data: ctx.resbody
   })
 }
 /**
@@ -34,7 +45,7 @@ exports.shoppingCart = async ctx => {
     idUser: session.getSession(ctx.headers['cookie']).idUser
   })
   // model
-  IndexModel.orderForm(ctx)
+  await IndexModel.orderForm(ctx)
   // view
   ctx.render('/user/order-form', {
     data: ctx.resbody
@@ -48,7 +59,7 @@ exports.orderForm = async ctx => {
     idUser: session.getSession(ctx.headers['cookie']).idUser
   })
   // model
-  IndexModel.orderForm(ctx)
+  await IndexModel.orderForm(ctx)
   // view
   ctx.render('/user/order-form', {
     data: ctx.resbody,
