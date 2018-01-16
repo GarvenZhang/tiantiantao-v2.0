@@ -42,7 +42,7 @@ module.exports = app => {
   app.get('/', IndexController.index)
   app.get('/list?:param', IndexController.list)
   app.get('/detail?:id', IndexController.detail)
-  app.get('/shopping-cart?:id', IndexController.shoppingCart)
+  app.get('/shopping-cart', IndexController.shoppingCart)
   app.get('/order-form?:id', IndexController.orderForm)
   app.get('/order-form/success', IndexController.orderFormSuccess)
   app.get('/info/userInfo', IndexController.userInfo)
