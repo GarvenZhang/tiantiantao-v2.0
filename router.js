@@ -8,7 +8,7 @@ const AdminController = require('./controllers/admin')
 const UserController = require('./controllers/user')
 module.exports = app => {
   // 商品模块
-  app.get('/v1/goods/:name?curPage=:curPage&nextPage=:nextPage&perPage=:perPage&min=:min&max=:max', GoodsController.get)
+  app.get('/v1/goods/:name?nextPage=:nextPage&perPage=:perPage&min=:min&max=:max', GoodsController.get)
   app.post('/v1/goods', GoodsController.post)
   app.delete('/v1/goods/:id', GoodsController.delete)
   app.put('/v1/goods', GoodsController.put)
