@@ -36,32 +36,26 @@ exports.get = async ctx => {
     condition = `
       ${condition} AND idGoods = ${postData.id};
     `
-  // 根据商品类别查询
+    // 根据商品类别查询
   } else if (postData.categoryId) {
     condition = `
       ${condition} AND Goods.Category_idCategory = ${postData.categoryId}
     `
-  // 只根据名称查询
+    // 只根据名称查询
   } else if (postData.name && !postData.min) {
     condition = `
       ${condition} AND Goods.name = '${postData.name}'
     `
-  // 根据名称和价格范围来查询
+    // 根据名称和价格范围来查询
   } else if (postData.name && postData.min) {
     condition = `
       ${condition} AND Goods.name = '${postData.name}' AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
     `
   }
-  // 查询
-  await mysqlModule.queryConnection(sql)
-    .then(result => {
-      console.log(sql)
-    }
   let sql = `
     SELECT ${field} ${condition};
     SELECT COUNT(*) AS allCount ${condition} ${pagination};
   `
-
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
