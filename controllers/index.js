@@ -18,16 +18,26 @@ exports.index = async ctx => {
  */
 exports.list = async ctx => {
   const aUrlParam = ctx.aUrlParam
-  const categoryId = aUrlParam[0]
-  const nextPage = aUrlParam[1]
-  const perPage = aUrlParam[2]
+  const param = aUrlParam[0]
+  const nextPage = 1
+  const perPage = 16
   // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
   const start = nextPage * perPage - perPage
   const offset = perPage
-
-  ctx.filter({
-    categoryId, start, offset
-  })
+  // 根据类型查商品
+  if (param.indexOf('type_') === 0) {
+    let categoryId = /^type_(\d)+?$/.exec(param)[1]
+    ctx.filter({
+      categoryId, start, offset
+    })
+  // 根据名称查商品
+  } else {
+    ctx.filter({
+      name: param,
+      start,
+      offset
+    })
+  }
   // model
   await goodsModel.get(ctx)
   // view
