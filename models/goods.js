@@ -27,45 +27,47 @@ exports.add = async ctx => {
  */
 exports.get = async ctx => {
   const postData = ctx.filteredData
-  let sql = `
-    SELECT idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category, (SELECT COUNT(idGoods) FROM Goods) AS allCount,
-      CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg
-    FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory
-  `
+  let field = `idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category, CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg`
+  let condition = `FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory`
+  let pagination = `LIMIT ${postData.start}, ${postData.offset}`
   // 根据id查商品
   if (postData.id) {
-    sql = `
-      ${sql} AND idGoods = ${postData.id};
+    condition = `
+      ${condition} AND idGoods = ${postData.id};
     `
   // 根据商品类别查询
   } else if (postData.categoryId) {
-    sql = `
-      ${sql} AND Goods.Category_idCategory = ${postData.categoryId}
-      LIMIT ${postData.start}, ${postData.offset};
+    condition = `
+      ${condition} AND Goods.Category_idCategory = ${postData.categoryId}
     `
   // 只根据名称查询
   } else if (postData.name && !postData.min) {
-    sql = `
-      ${sql} AND Goods.name = '${postData.name}'
-      LIMIT ${postData.start}, ${postData.offset};
+    condition = `
+      ${condition} AND Goods.name = '${postData.name}'
     `
   // 根据名称和价格范围来查询
   } else if (postData.name && postData.min) {
-    sql = `
-      ${sql} AND Goods.name = '${postData.name}' AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
-      LIMIT ${postData.start}, ${postData.offset};
+    condition = `
+      ${condition} AND Goods.name = '${postData.name}' AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
     `
   }
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
       console.log(sql)
+  let sql = `
+    SELECT ${field} ${condition};
+    SELECT COUNT(*) AS allCount ${condition} ${pagination};
+  `
+  // 查询
+  await mysqlModule.queryConnection(sql)
+    .then(result => {
       console.log(result)
       ctx.resbody = {
         'status': 'success',
         'statusCode': 200,
-        'data': result,
-        allCount: result[0] ? result[0].allCount : 0,
+        'data': result[0],
+        allCount: result[1][0].allCount,
         min: postData.min ? postData.min : 0,
         max: postData.max ? postData.max : 0
       }

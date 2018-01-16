@@ -3,6 +3,7 @@ module.exports = {
     host: '123.207.121.188',
     port: 3306,
     database: 'tiantiantao',
+    multipleStatements: true,
     user: 'garven',
     password: '970226'
   },
