@@ -28,14 +28,14 @@ exports.add = async ctx => {
 exports.get = async ctx => {
   const postData = ctx.filteredData
   let sql = `
-    SELECT idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category,
+    SELECT idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category, (SELECT COUNT(idGoods) FROM Goods) AS allCount,
       CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg
     FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory
   `
   // 根据id查商品
   if (postData.id) {
     sql = `
-      ${sql} AND idGoods = ${postData.id}
+      ${sql} AND idGoods = ${postData.id};
     `
   // 根据商品类别查询
   } else if (postData.categoryId) {
@@ -56,10 +56,18 @@ exports.get = async ctx => {
       LIMIT ${postData.start}, ${postData.offset};
     `
   }
+  console.log(sql)
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
-      ctx.resbody = Cache.addBaseModel(result)
+      ctx.resbody = {
+        'status': 'success',
+        'statusCode': 200,
+        'data': result,
+        allCount: result[0] ? result[0].allCount : 0,
+        min: postData.min ? postData.min : 0,
+        max: postData.max ? postData.max : 0
+      }
     })
     .catch(error => {
       console.log(`查询商品出错：${error}`)
