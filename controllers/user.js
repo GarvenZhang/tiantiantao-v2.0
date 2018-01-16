@@ -27,7 +27,7 @@ exports.login = async ctx => {
   ctx.filter(postData)
 
   // model
-  userModel.login(ctx)
+  await userModel.login(ctx)
 }
 
 /**
@@ -60,7 +60,7 @@ exports.register = async ctx => {
   ctx.filter(postData)
 
   // model
-  userModel.register(ctx)
+  await userModel.register(ctx)
 }
 
 /**
@@ -93,7 +93,7 @@ exports.put = async ctx => {
   }))
 
   // model
-  userModel.put(ctx)
+  await userModel.put(ctx)
 }
 
 /**
@@ -110,7 +110,7 @@ exports.putVip = async ctx => {
   }
   ctx.filter(Object.assign(postData, idUser))
   // model
-  userModel.putVip(ctx)
+  await userModel.putVip(ctx)
 }
 
 /**
@@ -123,5 +123,5 @@ exports.postVip = async ctx => {
     isVip: 1
   })
   // model
-  userModel.putVip(ctx)
+  await userModel.putVip(ctx)
 }
