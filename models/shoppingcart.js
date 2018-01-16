@@ -78,7 +78,7 @@ exports.delete = async ctx => {
       'SELECT * FROM Goods WHERE idGoods IN (',
       'select ', replace(@ret, ',' ,'  union all select '), ' AS name',
       ')');
-    -- 执行
+      -- 执行
     PREPARE sta FROM @sta ;
     EXECUTE sta;
   `

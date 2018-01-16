@@ -47,10 +47,10 @@ exports.post = async ctx => {
 exports.get = async ctx => {
   const aUrlParam = ctx.aUrlParam
   const name = aUrlParam[0]
-  const nextPage = aUrlParam[2]
-  const perPage = aUrlParam[3]
-  const min = aUrlParam[4]
-  const max = aUrlParam[5]
+  const nextPage = aUrlParam[1]
+  const perPage = aUrlParam[2]
+  const min = parseFloat(aUrlParam[3])
+  const max = parseFloat(aUrlParam[4])
 
   // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
   const start = nextPage * perPage - perPage
