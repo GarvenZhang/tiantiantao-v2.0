@@ -49,6 +49,7 @@ exports.list = async ctx => {
   }
   // model
   await goodsModel.get(ctx)
+  console.log(ctx.resbody)
   // view
   ctx.render('/user/list', {
     data: ctx.resbody
@@ -65,6 +66,7 @@ exports.detail = async ctx => {
   // model
   await goodsModel.get(ctx)
   // view
+  console.log(ctx.resbody)
   ctx.render('/user/detail', {
     data: ctx.resbody
   })

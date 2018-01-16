@@ -55,6 +55,7 @@ exports.get = async ctx => {
   // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
   const start = nextPage * perPage - perPage
   const offset = perPage
+  console.log(start, offset)
   // 具体商品
   if (name.indexOf('id_') === 0) {
     let id = /^id_(\d)+?$/.exec(name)[1]

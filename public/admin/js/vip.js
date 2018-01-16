@@ -4,8 +4,8 @@ doc.onclick = function (e) {
   const target = e.target
   const id = target.id
   console.log(id)
-  if (id.includes('js-seach')) {
-
+  if (id.includes('js-search')) {
+    checkType()
   }
   else if (id.includes('js-cancel-vip')) {
     const idUser = id.split('-')[3]
@@ -92,26 +92,30 @@ function delType (id) {
  * 查询类别
  */
 function checkType () {
-  const addForm = doc.getElementById('addForm')
+  const vipSearchInput = doc.getElementById('vipSearchInput')
   ajax({
-    method: 'post',
-    url: '/v1/category',
-    data: JSON.stringify({
-      name: addForm['type'].value.trim()
-    }),
+    method: 'get',
+    url: `/v1/user/${vipSearchInput.value.trim()}/vip`,
     fn: function (data) {
-      console.log(data)
+      const result = data
+      if (data.status === 'success') {
+        updateTable(result.data)
+      } else {
+        updateTable([])
+      }
     }
   })
 }
 
 function updateTable (data) {
   const tBody = document.getElementById('tBody')
+  const len = data.length
 
   let str = ''
 
-  for (let item of data) {
-    str += `
+  if (len) {
+    for (let item of data) {
+      str += `
     <tr>
         <td>${item.name}</td>
         <td>
@@ -120,6 +124,9 @@ function updateTable (data) {
         </td>
     </tr>
   `
+    }
+  } else {
+    str = `<tr><td colspan="2">暂无数据</td></tr>`
   }
 
   tBody.innerHTML = str

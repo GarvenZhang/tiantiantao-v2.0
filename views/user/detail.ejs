@@ -14,30 +14,32 @@
 <div class="content">
     <main class="main main--detail clearfix">
         <div class="detail-img-wrapper">
-            <img src="./imgs/timg.gif" class="img">
+            <img src="<%=data.data[0].bigImg%>" class="img">
         </div>
         <div class="detail-content">
             <div class="content-inner">
                 <div class="content-hd">
-                    <h3 class="hd-tt">小黄人</h3>
+                    <h3 class="hd-tt"><%=data.data[0].name%></h3>
                 </div>
                 <div class="content-wrapper">
-                    <p class="content-des">dddddddddddddddddddddddddddddddddddddd</p>
+                    <p class="content-des"><%=data.data[0].description%></p>
                 </div>
                 <div class="content-wrapper clearfix">
                     <div class="wrapper-inner">
                         购买数量：
                     </div>
                     <div class="wrapper-inner">
-                        <button type="button" class="btn" id="js-reduce">-</button><input type="text" value="1" class="num"><button type="button" class="btn" id="js-add">+</button>（库存：<span>20</span>）
+                        <button type="button" class="btn" id="js-reduce">-</button><input type="text" value="1" class="num"><button type="button" class="btn" id="js-add">+</button>
+                        <!--（库存：<span>20</span>）-->
                     </div>
                 </div>
                 <div class="content-wrapper">
-                    <button type="button" class="shopBtn" id="js-shop">加入购物车</button>
+                    <button type="button" class="shopBtn" id="js-shop" data-id="<%=data.data[0].idGoods%>">加入购物车</button>
                 </div>
             </div>
         </div>
     </main>
 </div>
+<script src="/public/user/js/search.js"></script>
 </body>
 </html>

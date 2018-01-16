@@ -3,30 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <title>商品管理</title>
-    <link rel="stylesheet" href="../common/reset.css">
-    <link rel="stylesheet" href="./css/public.css">
-    <link rel="stylesheet" href="../libs/modal/style.css">
-    <link rel="stylesheet" href="./css/goods.css">
-    <link rel="stylesheet" href="./css/order.css">
+    <link href="/public/common/reset.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/libs/modal/style.css">
+    <style>
+        .login-wrapper {
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid;
+            background: white;
+        }
+        .login-list .list-item {
+            width: 50%;
+            float: left;
+            text-align: center;
+        }
+        .login-list .list-link {
+            display: block;
+            font: bold 18px/2 '';
+            color: white;
+            background: black;
+        }
+        .login-list .list-item:nth-of-type(1) .list-link,
+        .login-list .list-link:hover {
+            background: gray;
+        }
 
+        .login-content .content-inner {
+            padding: 10px;
+        }
+        .form .form-label {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
 </head>
-    <body>
-    <ul><%= name %></ul>
+<body>
+<div class="login-wrapper">
+    <ul class="login-list clearfix">
+        <li class="list-item"><a href="javascript:;"  id="adminLogin" class="list-link">管理员登录</a></li>
+        <li  class="list-item"><a href="javascript:;" id="userLogin" class="list-link">用户登录</a></li>
+    </ul>
+    <div class="login-content">
+        <div class="content-inner" id="contentInner">
+            <form class="form" id="adminForm">
+                <label class="form-label">
+                    账号：<input type="text" name="account">
+                </label>
+                <label class="form-label">
+                    密码：<input type="password" name="password">
+                </label>
+                <div class="form-footer">
+                    <button type="button" class="btn" id="js-admin-login">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    <link rel="stylesheet" href="/public/admin/css/goods.css">
+<div class="modal hide" id="registerModal" data-dismiss="true" >
+    <div class="modal-inner">
+        <!-- 模态弹框头部 -->
+        <header class="modal-header">
+            <h2 class="header-title">增加类别</h2>
+            <!-- 点击设置了data-dismiss属性的元素，能使模态弹框隐藏 -->
+            <span class="del" data-dismiss="true">x</span>
+        </header>
+        <!-- 模态弹框头部 结束-->
+        <!-- 模态弹框内容区 -->
+        <div class="modal-content">
+            <div class="content-inner">
+                <form class="form" id="registerForm">
+                    <label class="form-label">账号：<input type="text" class="form-input" name="account" placeholder="手机号码"></label>
+                    <label class="form-label">姓名：<input type="text" class="form-input" name="name"></label>
+                    <label class="form-label">密码：<input type="password" class="form-input" name="password"></label>
+                    <label class="form-label">性别：
+                        <input type="radio" class="form-input" value="0" name="sex">男
+                        <input type="radio" class="form-input" value="1" name="sex">女
+                    </label>
+                </form>
+            </div>
+        </div>
+        <!-- 模态弹框内容区 结束-->
+        <!-- 模态弹框尾部 -->
+        <footer class="modal-footer">
+            <button type="button" class="btn" id="js-user-register">确定</button>
+        </footer>
+        <!-- 模态弹框尾部 结束-->
+    </div>
+</div>
+<script src="/public/common/common.js"></script>
+<script src="/public/libs/modal/modal.js"></script>
+<script>
+    document.onclick = function (e) {
+      const target = e.target
+      const id = target.id
 
-    <form method="post" action="/v1/user/login">
-        <p>
-            账号：<input type="text">
-        </p>
-        <p>
-            密码：<input type="password">
-        </p>
-        <p>
-            <input type="submit" value="登陆">
-        </p>
-    </form>
+      if (id === 'adminLogin') {
+        showLoginContent(1)
+      } else if (id === 'userLogin') {
+        showLoginContent(2)
+        modal({
+          modal: document.getElementById('registerModal'),
+          target: document.getElementById('register'),
+          draggable: true
+        })
+      } else if (id === 'js-admin-login') {
+        login()
+      } else if (id === 'js-user-login') {
+        login()
+      } else if (id === 'js-user-register') {
+        register()
+      }
+    }
 
-    <%- include('admin/index') %>
+    function showLoginContent (type) {
+      const contentInner = document.getElementById('contentInner')
+      let str = ''
+
+      // type=1：管理员登录
+      if (type === 1) {
+        str =`
+         <form class="form" id="adminForm">
+                <label class="form-label">
+                    账号：<input type="text" name="account">
+                </label>
+                <label class="form-label">
+                    密码：<input type="password" name="password">
+                </label>
+                <div class="form-footer">
+                    <button type="button" class="btn" id="js-admin-login">登录</button>
+                </div>
+            </form>
+        `
+      }
+      // type=2：用户登录
+      else {
+        str = `
+            <form class="form" id="userForm">
+                <label class="form-label">
+                    账号：<input type="text" name="account">
+                </label>
+                <label class="form-label">
+                    密码：<input type="password" name="password">
+                </label>
+                <div class="form-footer">
+                    <button type="button" class="btn" id="js-user-login">登录</button>
+                    <button type="button" class="btn" id="register" data-target="#registerModal">注册</button>
+                </div>
+            </form>
+        `
+      }
+
+      contentInner.innerHTML = str
+    }
+
+    function register () {
+      const registerForm = document.getElementById('registerForm')
+      JM.ajax({
+        method: 'post',
+        url: '/v1/user',
+        data: JSON.stringify({
+          account: registerForm.account.value.trim(),
+          name: registerForm.name.value.trim(),
+          password: registerForm.password.value.trim(),
+          sex: registerForm.sex.value.trim()
+        })
+      }).then(result => {
+        result = JSON.parse(result)
+
+        if (result.status === 'success') {
+          alert(`注册成功`)
+          registerForm.reset()
+          const modal =document.getElementById('registerModal')
+          modal.classList.add('hide')
+        } else {
+          alert(`注册失败`)
+        }
+      })
+    }
+
+    function login () {
+      let form = document.getElementById('adminForm')
+
+      if (form) {
+        loginAjax(form)
+      } else {
+        form = document.getElementById('userForm')
+        loginAjax(form)
+      }
+
+    }
+   function loginAjax (form) {
+     JM.ajax({
+       method: 'post',
+       url: '/v1/user/login',
+       data: JSON.stringify({
+         account: form.account.value.trim(),
+         password: form.password.value.trim()
+       })
+     }).then(result => {
+       result = JSON.parse(result)
+       if (result.status === 'success') {
+         alert(`登录成功`)
+       } else {
+         alert(`登录失败`)
+       }
+     })
+   }
+</script>
 </body>
 </html>
