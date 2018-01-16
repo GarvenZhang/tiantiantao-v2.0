@@ -173,6 +173,7 @@
 
         if (result.status === 'success') {
           alert(`注册成功`)
+          registerForm.reset()
           const modal =document.getElementById('registerModal')
           modal.classList.add('hide')
         } else {
