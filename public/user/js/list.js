@@ -12,14 +12,12 @@ const getAjaxResult = async (url, options) => {
     result = JSON.parse(result)
     if (result.status === 'success') {
       return new Promise((resolve, reject) => {
-        const len = result.data.length
         if (options) {
-          const perPage = options.perPage
           resolve({
             currentPage: options.currentPage,
-            perPage: perPage,
-            totalPages: Math.ceil(len / perPage),
-            totalRecords: len
+            perPage: options.perPage,
+            totalPages: Math.ceil(result.allCount / options.perPage),
+            totalRecords: result.allCount
           })
         }
         showGoods(result.data)

@@ -56,10 +56,11 @@ exports.get = async ctx => {
       LIMIT ${postData.start}, ${postData.offset};
     `
   }
-  console.log(sql)
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
+      console.log(sql)
+      console.log(result)
       ctx.resbody = {
         'status': 'success',
         'statusCode': 200,
