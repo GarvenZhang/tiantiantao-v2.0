@@ -19,7 +19,7 @@
             <div class="section-wrapper clearfix" id="categories">
                 <ul class="goods-type-list">
                     <%for (let item of category.data) {%>
-                        <li class="list-item"><a href="/list?<%=item.name%>" class="list-link"><%=item.name%></a></li>
+                        <li class="list-item"><a href="/list?type_<%=item.idCategory%>?nextPage=1&perPage=16&min=0&max=0" class="list-link"><%=item.name%></a></li>
                     <%}%>
                 </ul>
             </div>
@@ -62,5 +62,7 @@
         </section>
     </main>
 </div>
+<script src="/public/user/js/public.js"></script>
+<script src="/public/user/js/index.js"></script>
 </body>
 </html>
