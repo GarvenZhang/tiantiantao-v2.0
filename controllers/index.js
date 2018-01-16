@@ -1,4 +1,6 @@
 const cache = require('../middlewares/cache')
+let session = require('../middlewares/session')
+const IndexModel = require('../models/index')
 /**
  * 官网首页
  */
@@ -28,16 +30,29 @@ exports.detail = async ctx => {
  * 购物车
  */
 exports.shoppingCart = async ctx => {
-  ctx.render('/user/shopping-cart', {
-    data: await cache.getModel('shoppingCartModel')
+  ctx.filter({
+    idUser: session.getSession(ctx.headers['cookie']).idUser
+  })
+  // model
+  IndexModel.orderForm(ctx)
+  // view
+  ctx.render('/user/order-form', {
+    data: ctx.resbody
   })
 }
 /**
  * 订单页
  */
 exports.orderForm = async ctx => {
+  ctx.filter({
+    idUser: session.getSession(ctx.headers['cookie']).idUser
+  })
+  // model
+  IndexModel.orderForm(ctx)
+  // view
   ctx.render('/user/order-form', {
-    data: await cache.getModel('orderFormModel')
+    data: ctx.resbody,
+    fare: 6
   })
 }
 /**
