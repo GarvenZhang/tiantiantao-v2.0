@@ -27,7 +27,8 @@ exports.add = async ctx => {
  */
 exports.get = async ctx => {
   const postData = ctx.filteredData
-  let field = `idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category, CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg`
+  let field = `idGoods, Goods.name, description, price, bigImgSrc, date, Category.name AS category, CONCAT('[', (SELECT GROUP_CONCAT('{id: ', SmImgSrc.idSmImgSrc, ', 
+               src: ', SmImgSrc.src, ', base64: ', SmImgSrc.base64, '}') FROM SmImgSrc WHERE Goods.idGoods = SmImgSrc.Goods_idGoods), ']') AS smImg`
   let condition = `FROM Goods INNER JOIN Category ON Goods.Category_idCategory = Category.idCategory`
   let pagination = `LIMIT ${postData.start}, ${postData.offset}`
   // 根据id查商品
