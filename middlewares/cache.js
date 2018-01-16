@@ -13,7 +13,6 @@ module.exports = {
    * @param {String} modelValue 模型值
    */
   setModel (modelName, modelValue) {
-    console.log(this.data[modelName])
     this.data[modelName].data = modelValue
   },
   /**
@@ -39,10 +38,7 @@ module.exports = {
     if (this.data[modelName].data.length <= pageMinNum) {
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
         .then(result => {
-          console.log(tableName, modelName)
-          console.log(this.data)
           this.setModel(modelName, result)
-          console.log(this.data)
         })
     }
   },
@@ -55,9 +51,12 @@ module.exports = {
     const tableName = this.relation[modelName]
     const mysqlModule = this.mysqlModule
     const pageMinNum = this.dataMinNum
+    // 若没有数据
+    if (this.data[modelName].data.length === 0) {
+      await this.setDefaultModel(modelName)
+    }
     // 若修改的id在model中能找到
     const isChanged = this.data[modelName].data.some(item => {
-
       // 不同模型中id的叫法不同
       for (var attr in item) {
         if (/^(id|id\w*)$/.test(attr)) {
@@ -65,9 +64,7 @@ module.exports = {
         }
       }
     })
-
-    console.log(`isChanged:${isChanged}`)
-
+    console.log(isChanged)
     if (isChanged) {
       // 更新
       await mysqlModule.queryConnection(`SELECT * FROM ${tableName} LIMIT 0, ${pageMinNum}`)
