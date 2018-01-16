@@ -40,6 +40,7 @@ exports.list = async ctx => {
   }
   // model
   await goodsModel.get(ctx)
+  console.log(ctx.resbody)
   // view
   ctx.render('/user/list', {
     data: ctx.resbody

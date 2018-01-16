@@ -5,6 +5,7 @@
     <title>天天淘</title>
     <link rel="stylesheet" type="text/css" href="/public/common/reset.css">
     <link rel="stylesheet" type="text/css" href="/public/user/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/public/libs/pagination/style.css">
 </head>
 <body>
 <!-- 头部 -->
@@ -19,20 +20,81 @@
                 <h2 class="header-ti">商品列表</h2>
             </div>
             <div class="section-wrapper clearfix">
+                <%if (data.status === 'success' && data.data.length > 0) {%>
+                    <%for (let item of data.data) {%>
                 <div class="section-item">
                     <div class="item-img-wrapper">
-                        <img class="item-img" src="./imgs/timg.gif">
+                        <img class="item-img" src="<%=item.bigImg%>">
                     </div>
                     <div class="item-detail-wrapper">
-                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
-                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
+                        <a href="/detail?<%=item.idGoods%>" class="item-link"><h3 class="item-ti"><%=item.name%></h3></a>
+                        <p class="item-price"><span class="price-sign">￥</span><strong class="price"><%=item.price%></strong></p>
                     </div>
                 </div>
+                <%}%>
+                <%} else {%>
+                    <div>暂无数据</div>
+                <%}%>
             </div>
         </section>
+        <div id="pag"></div>
     </main>
 </div>
+<script src="/public/common/common.js"></script>
+<script src="/public/libs/pagination/pagination.js"></script>
 <script src="/public/user/js/public.js"></script>
 <script src="/public/user/js/index.js"></script>
+<script>
+
+  const ajaxGoods = async (options) => {
+    const typeReg = /(?:\?|\/)type_(.*(?=\?|$))/
+    let typeId = typeReg.exec(location.href) ? typeReg.exec(location.href)[1] : ''
+    const result = await JM.ajax({
+      method: 'get',
+      url: `/v1/goods/type_${typeId}?nextPage=${options.currentPage}&perPage=${options.perPage}&min=0&max=0`
+    }).then(result => {
+      result = JSON.parse(result)
+      if (result.status === 'success') {
+        return new Promise((resolve, reject) => {
+          const len = result.data.length
+          const perPage = options.perPage
+          let cP = options.currentPage
+          resolve({
+            currentPage: cP,
+            perPage: perPage,
+            totalPages: Math.ceil(len / perPage),
+            totalRecords: len
+          })
+        })
+      } else {
+
+      }
+    })
+    console.log(result)
+    return result
+//    ajax({
+//      method: 'get',
+//      url: `/v1/goods/type_${typeId}?nextPage=1&perPage=${options.perPage}&min=0&max=0`
+//    }).then((resolve) => {
+//      const result = JSON.parse(resolve)
+//      if (result.status === 'success') {
+//        const len = data.length
+//        const perPage = options.perPage
+//        let cP = options.currentPage
+//        resolve({
+//          currentPage: cP,
+//          perPage: perPage,
+//          totalPages: Math.ceil(len / perPage),
+//          totalRecords: len
+//        })
+//      }
+//    }).catch((reject) => console.log(reject))
+  }
+    pagination({
+      wrapper: document.getElementById('pag'),
+      ajax: ajaxGoods,
+      perPage: 3
+    })
+</script>
 </body>
 </html>

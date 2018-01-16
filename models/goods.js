@@ -46,18 +46,19 @@ exports.get = async ctx => {
   } else if (postData.name && !postData.min) {
     sql = `
       ${sql} AND Goods.name = '${postData.name}'
-      LIMIT ${postData.start}, ${postData.offset}
+      LIMIT ${postData.start}, ${postData.offset};
     `
   // 根据名称和价格范围来查询
   } else if (postData.name && postData.min) {
     sql = `
       ${sql} AND Goods.name = '${postData.name}' AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
-      LIMIT ${postData.start}, ${postData.offset}
+      LIMIT ${postData.start}, ${postData.offset};
     `
   }
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
+      console.log(sql)
       ctx.resbody = Cache.addBaseModel(result)
     })
     .catch(error => {

@@ -213,6 +213,7 @@ let PaginationModel = {
     const ajax = this.ajax
     await ajax(options)
       .then((result) => {
+        console.log(result)
         this.totalPages = result.totalPages
         this.totalRecords = result.totalRecords
         this.currentPage = result.currentPage

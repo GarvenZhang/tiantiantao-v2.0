@@ -8,7 +8,7 @@
   if (jsSearch) {
     jsSearch.onclick = () => {
       const val = searchInput.value.trim()
-      location.href = `/list?${val}?nextPage=1&perPage=16&min=0&max=0`
+      location.href = `/list?${val}`
     }
   }
 })()
