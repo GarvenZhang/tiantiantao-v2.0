@@ -128,7 +128,7 @@ exports.put = async ctx => {
   ctx.filter(postData)
 
   // model
-  goodsModel.put(ctx)
+  await goodsModel.put(ctx)
 }
 
 /**
