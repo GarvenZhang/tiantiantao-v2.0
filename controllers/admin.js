@@ -29,7 +29,7 @@ exports.type = async ctx => {
  * 订单管理
  */
 exports.orderForm = async ctx => {
-  ctx.render('/admin/orderform', {
+  ctx.render('/admin/orderForm', {
     data: await cache.getModel('orderFormModel')
   })
 }
