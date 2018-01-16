@@ -16,8 +16,8 @@ doc.onclick = function (e) {
   const target = e.target
   const id = target.id
   console.log(id)
-  if (id.includes('js-seach')) {
-
+  if (id === 'js-search') {
+    checkGoods()
   }
   else if (id === 'js-add-sure') {
     addGoods(addModal)
@@ -125,27 +125,31 @@ function delGoods (id) {
 /**
  * 查询类别
  */
-function checkType () {
-  const addForm = doc.getElementById('addForm')
+function checkGoods () {
+  const goodsSearchInput = doc.getElementById('goodsSearchInput')
   ajax({
-    method: 'post',
-    url: '/v1/category',
-    data: JSON.stringify({
-      name: addForm['type'].value.trim()
-    }),
+    method: 'get',
+    url: `/v1/goods/${goodsSearchInput.value.trim()}?nextPage=1&perPage=16&min=0&max=0`,
     fn: function (data) {
-      console.log(data)
+      const result = data
+      if (data.status === 'success') {
+        updateGoods(result.data)
+      } else {
+        updateGoods([])
+      }
     }
   })
 }
 
 function updateGoods (data) {
   const goodsWrapper = document.getElementById('goodsWrapper')
+  const len = data.length
 
   let str = ''
 
-  for (let item of data) {
-    str += `
+  if (len) {
+    for (let item of data) {
+      str += `
     <div class="goods-item" data-id="${item.idGoods}">
         <div class="item-inner">
             <img src="${item.bigImg}" class="item-img">
@@ -155,6 +159,9 @@ function updateGoods (data) {
         </div>
     </div>
   `
+    }
+  } else {
+    str = `<div>暂无此数据</div>`
   }
 
   goodsWrapper.innerHTML = str

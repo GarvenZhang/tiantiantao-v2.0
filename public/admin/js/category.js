@@ -16,10 +16,8 @@ doc.onclick = function (e) {
   const target = e.target
   const id = target.id
   console.log(id)
-  if (id.includes('js-seach')) {
 
-  }
-  else if (id === 'js-add-sure') {
+  if (id === 'js-add-sure') {
     addType(addModal)
   }
   else if (id === 'js-modify-sure') {
@@ -108,23 +106,6 @@ function delType (id) {
       } else {
         alert('删除类别失败' + result.message)
       }
-    }
-  })
-}
-
-/**
- * 查询类别
- */
-function checkType () {
-  const addForm = doc.getElementById('addForm')
-  ajax({
-    method: 'post',
-    url: '/v1/category',
-    data: JSON.stringify({
-      name: addForm['type'].value.trim()
-    }),
-    fn: function (data) {
-      console.log(data)
     }
   })
 }

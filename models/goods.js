@@ -45,13 +45,13 @@ exports.get = async ctx => {
   // 只根据名称查询
   } else if (postData.name && !postData.min) {
     sql = `
-      ${sql} AND Goods.name = ${postData.name}
+      ${sql} AND Goods.name = '${postData.name}'
       LIMIT ${postData.start}, ${postData.offset}
     `
   // 根据名称和价格范围来查询
   } else if (postData.name && postData.min) {
     sql = `
-      ${sql} AND Goods.name = ${postData.name} AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
+      ${sql} AND Goods.name = '${postData.name}' AND Goods.price >= ${postData.min} AND Goods.price <= ${postData.max}
       LIMIT ${postData.start}, ${postData.offset}
     `
   }

@@ -18,7 +18,9 @@
             </div>
             <div class="section-wrapper clearfix" id="categories">
                 <ul class="goods-type-list">
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
+                    <%for (let item of data.data) {%>
+                        <li class="list-item"><a href="#" class="list-link"><%=item.name%></a></li>
+                    <%}%>
                     <li class="list-item"><a href="#" class="list-link">分类1</a></li>
                     <li class="list-item"><a href="#" class="list-link">分类1</a></li>
                     <li class="list-item"><a href="#" class="list-link">分类1</a></li>
