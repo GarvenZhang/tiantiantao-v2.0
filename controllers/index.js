@@ -6,8 +6,17 @@ const goodsModel = require('../models/goods')
  * 官网首页
  */
 exports.index = async ctx => {
-  console.log(ctx.pathname)
+  const {
+    idUser, account, name, sex, isVip
+  } = session.getSession(ctx.headers.cookie)
   ctx.render('/user/index', {
+    userData: session ? {
+      id: idUser,
+      account,
+      name,
+      sex,
+      isVip
+    } : null,
     category: await cache.getModel('categoryModel'),
     recommandGoods: await cache.getModel('goodsModel'),
     discountedGoods: await cache.getModel('goodsModel')
