@@ -4,7 +4,7 @@
  * @param url
  * @returns {Promise.<*>}
  */
-const getAjaxResult = async (options, url) => {
+const getAjaxResult = async (url, options) => {
   return await JM.ajax({
     method: 'get',
     url: url
@@ -13,13 +13,15 @@ const getAjaxResult = async (options, url) => {
     if (result.status === 'success') {
       return new Promise((resolve, reject) => {
         const len = result.data.length
-        const perPage = options.perPage
-        resolve({
-          currentPage: options.currentPage,
-          perPage: perPage,
-          totalPages: Math.ceil(len / perPage),
-          totalRecords: len
-        })
+        if (options) {
+          const perPage = options.perPage
+          resolve({
+            currentPage: options.currentPage,
+            perPage: perPage,
+            totalPages: Math.ceil(len / perPage),
+            totalRecords: len
+          })
+        }
         showGoods(result.data)
       })
     } else {
@@ -33,6 +35,7 @@ const getAjaxResult = async (options, url) => {
  * @param options
  * @returns {Promise.<*>}
  */
+
 const ajaxGoods = async (options) => {
   const typeReg = /(?:\?|\/)type_(.*(?=\?|$))/
   let typeId = typeReg.exec(location.href) ? typeReg.exec(location.href)[1] : ''
@@ -40,13 +43,29 @@ const ajaxGoods = async (options) => {
 
   // 根据类别id
   if (typeId) {
-    result = getAjaxResult(options, `/v1/goods/type_${typeId}?nextPage=${options.currentPage}&perPage=${options.perPage}&min=0&max=0`)
+    result = getAjaxResult(`/v1/goods/type_${typeId}?nextPage=${options.currentPage}&perPage=${options.perPage}&min=0&max=0`, options)
   }
   // 查询商品名
   else {
     const goodsNameReg = /list\?(.*(?=$))|goods\/(.*(?=\?))/
+
+
     let goodsName = goodsNameReg.exec(location.href) ? decodeURIComponent(goodsNameReg.exec(location.href)[1]) : ''
-    result = getAjaxResult(options, `/v1/goods/${goodsName}?nextPage=${options.currentPage}&perPage=${options.perPage}&min=0&max=0`)
+
+    const cMinPrice = JM.getCookie(document.cookie, 'minPrice')
+    const cMaxPrice = JM.getCookie(document.cookie, 'maxPrice')
+    console.log(cMinPrice, cMaxPrice)
+
+    if (cMinPrice && cMaxPrice) {
+      const minPrice = document.getElementById('minPrice')
+      const maxPrice = document.getElementById('maxPrice')
+      let miPrice = (minPrice && minPrice.value.trim() === '' ? 0: cMinPrice)
+      let maPrice = (maxPrice && maxPrice.value.trim() === '' ? 0: cMinPrice)
+
+      result = getAjaxResult(`/v1/goods/${goodsName}?nextPage=${options.currentPage}&perPage=${options.perPage}&min=${miPrice}&max=${maPrice}`, options)
+    } else {
+      result = getAjaxResult(`/v1/goods/${goodsName}?nextPage=${options.currentPage}&perPage=0&min=0&max=0`, options)
+    }
   }
 
   return result
@@ -85,3 +104,18 @@ pagination({
   ajax: ajaxGoods,
   perPage: 5
 })
+
+const jsMoneySearch = document.getElementById('js-money-search')
+
+if (jsMoneySearch) {
+  jsMoneySearch.onclick = () => {
+    const minPrice = document.getElementById('minPrice')
+    const maxPrice = document.getElementById('maxPrice')
+    document.cookie = `minPrice=${minPrice.value.trim()}`
+    document.cookie = `maxPrice=${maxPrice.value.trim()}`
+    const goodsNameReg = /list\?(.*(?=$))|goods\/(.*(?=\?))/
+    let goodsName = goodsNameReg.exec(location.href) ? decodeURIComponent(goodsNameReg.exec(location.href)[1]) : ''
+
+    getAjaxResult(`/v1/goods/${goodsName}?nextPage=${1}&perPage=${10}&min=${parseInt(minPrice.value.trim())}&max=${parseInt(maxPrice.value.trim())}`)
+  }
+}
