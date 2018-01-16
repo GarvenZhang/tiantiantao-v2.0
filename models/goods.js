@@ -57,8 +57,8 @@ exports.get = async ctx => {
     .then(result => {
       console.log(sql)
   let sql = `
-    SELECT ${field} ${condition};
-    SELECT COUNT(*) AS allCount ${condition} ${pagination};
+    SELECT ${field} ${condition} ${pagination};
+    SELECT COUNT(*) AS allCount ${condition};
   `
   // 查询
   await mysqlModule.queryConnection(sql)
