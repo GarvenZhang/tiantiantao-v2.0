@@ -41,6 +41,14 @@ exports.orderForm = async ctx => {
   })
 }
 /**
+ * 订购成功页
+ */
+exports.orderFormSuccess = async ctx => {
+  ctx.render('/user/order-form-success', {
+    data: {}
+  })
+}
+/**
  * 用户信息页
  */
 exports.userInfo = async ctx => {
@@ -49,7 +57,7 @@ exports.userInfo = async ctx => {
   })
 }
 /**
- * 订单页
+ * 订单详情页
  */
 exports.orderFormInfo = async ctx => {
   ctx.render('/user/orderFormInfo', {

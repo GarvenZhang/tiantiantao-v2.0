@@ -22,9 +22,6 @@ module.exports = {
    * @return {Object} 模型值
    */
   async getModel (modelName) {
-
-    if (this.data[modelName].data.length === 0) {
-      console.log(modelName)
     if (this.data[modelName].data.length === 0) {
       await this.setDefaultModel(modelName)
     }
@@ -46,7 +43,6 @@ module.exports = {
           console.log(this.data)
           this.setModel(modelName, result)
           console.log(this.data)
-
         })
     }
   },
@@ -61,10 +57,6 @@ module.exports = {
     const pageMinNum = this.dataMinNum
     // 若修改的id在model中能找到
     const isChanged = this.data[modelName].data.some(item => {
-
-      for (var attr in item) {
-        if (/^(id\w*$)/.test(attr)) {
-          console.log(RegExp.$1, item[RegExp.$1], id)
 
       // 不同模型中id的叫法不同
       for (var attr in item) {
