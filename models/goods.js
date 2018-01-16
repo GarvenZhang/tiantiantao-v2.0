@@ -41,6 +41,7 @@ exports.get = async ctx => {
   } else if (postData.categoryId) {
     sql = `
       ${sql} AND Goods.Category_idCategory = ${postData.categoryId}
+      LIMIT ${postData.start}, ${postData.offset};
     `
   // 只根据名称查询
   } else if (postData.name && !postData.min) {
