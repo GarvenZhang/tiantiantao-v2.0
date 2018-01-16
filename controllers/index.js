@@ -17,8 +17,22 @@ exports.index = async ctx => {
  * 商品列表页
  */
 exports.list = async ctx => {
+  const aUrlParam = ctx.aUrlParam
+  const categoryId = aUrlParam[0]
+  const nextPage = aUrlParam[1]
+  const perPage = aUrlParam[2]
+  // 将curPage, nextPage, perPage 转化成LIMIT 起点数位置， 将要获取的数目
+  const start = nextPage * perPage - perPage
+  const offset = perPage
+
+  ctx.filter({
+    categoryId, start, offset
+  })
+  // model
+  await goodsModel.get(ctx)
+  // view
   ctx.render('/user/list', {
-    data: await cache.getModel('goodsModel')
+    data: ctx.resbody
   })
 }
 /**
@@ -26,9 +40,8 @@ exports.list = async ctx => {
  */
 exports.detail = async ctx => {
   const aUrlParam = ctx.aUrlParam
-  const name = aUrlParam[0]
   ctx.filter({
-    id: /^id_(\d)+?$/.exec(name)[1]
+    id: aUrlParam[0]
   })
   // model
   await goodsModel.get(ctx)
