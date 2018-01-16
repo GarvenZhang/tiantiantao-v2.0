@@ -1,5 +1,4 @@
 const baseTips = require('../middlewares/baseTips')
-let Cache = require('../middlewares/cache')
 let mysqlModule = require('../middlewares/mysqlModule')
 let session = require('../middlewares/session')
 /**
@@ -30,7 +29,7 @@ exports.login = async ctx => {
 exports.register = async ctx => {
   const postData = ctx.filteredData
   let sql = `
-    INSERT INTO User(account, password, name, sex) VALUES(${postData.account}, ${postData.password}, ${postData.name}, ${postData.sex});
+    INSERT INTO User(account, password, name, sex) VALUES(${postData.account}, '${postData.password}', '${postData.name}', ${postData.sex});
     SET @lastId = (SELECT @@IDENTITY);
     INSERT INTO ShoppingCart(idShoppingCart) VALUES(@lastId);
   `
