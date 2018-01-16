@@ -93,8 +93,8 @@ function modifyGoods (id, modal) {
       const result = JSON.parse(data)
       if (result.status === 'success') {
         alert('修改商品成功')
+        modal.reset()
         modal.classList.add('hide')
-        modifyModal.reset()
         updateGoods(result.data)
       } else {
         alert('修改商品失败' + result.message)
@@ -131,12 +131,13 @@ function checkGoods () {
     method: 'get',
     url: `/v1/goods/${goodsSearchInput.value.trim()}?nextPage=1&perPage=16&min=0&max=0`,
     fn: function (data) {
-      const result = data
-      if (data.status === 'success') {
+      const result = JSON.parse(data)
+      if (result.status === 'success') {
         updateGoods(result.data)
       } else {
         updateGoods([])
       }
+      goodsSearchInput.value = ''
     }
   })
 }
@@ -147,15 +148,17 @@ function updateGoods (data) {
 
   let str = ''
 
-  if (len) {
+  if (len > 0) {
     for (let item of data) {
       str += `
     <div class="goods-item" data-id="${item.idGoods}">
         <div class="item-inner">
             <img src="${item.bigImg}" class="item-img">
+            <p class="item-name">${item.name}</p>
             <p class="item-des">${item.description}</p>
             <p class="item-price">￥ ${item.price}</p>
             <span class="del" id="js-del-${item.idGoods}">x</span>
+            <span class="modify" id='js-modify-${item.idGoods}'>m</span>
         </div>
     </div>
   `

@@ -9,8 +9,8 @@ exports.index = async ctx => {
   console.log(ctx.pathname)
   ctx.render('/user/index', {
     category: await cache.getModel('categoryModel'),
-    recommandGoods: await cache.getModel('goodsModel').slice(0, 4),
-    discountedGoods: await cache.getModel('goodsModel').slice(0, 4)
+    recommandGoods: await cache.getModel('goodsModel'),
+    discountedGoods: await cache.getModel('goodsModel')
   })
 }
 /**

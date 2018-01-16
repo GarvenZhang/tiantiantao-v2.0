@@ -18,14 +18,9 @@
             </div>
             <div class="section-wrapper clearfix" id="categories">
                 <ul class="goods-type-list">
-                    <%for (let item of data.data) {%>
-                        <li class="list-item"><a href="#" class="list-link"><%=item.name%></a></li>
+                    <%for (let item of category.data) {%>
+                        <li class="list-item"><a href="/list?<%=item.name%>" class="list-link"><%=item.name%></a></li>
                     <%}%>
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
-                    <li class="list-item"><a href="#" class="list-link">分类1</a></li>
                 </ul>
             </div>
         </section>
@@ -34,15 +29,17 @@
                 <h2 class="header-ti">推荐商品</h2><a href="/src/product-feature.html" class="more">查看更多</a>
             </div>
             <div class="section-wrapper clearfix" id="commendGoods">
-                <div class="section-item">
-                    <div class="item-img-wrapper">
-                        <img class="item-img" src="./imgs/timg.gif">
+                <%for (let item of recommandGoods.data) {%>
+                    <div class="section-item">
+                        <div class="item-img-wrapper">
+                            <img class="item-img" src="<%=item.bigImg%>">
+                        </div>
+                        <div class="item-detail-wrapper">
+                            <a href="/detail?<%=item.idGoods%>" class="item-link"><h3 class="item-ti"><%=item.name%></h3></a>
+                            <p class="item-price"><span class="price-sign">￥</span><strong class="price"><%=item.price%></strong></p>
+                        </div>
                     </div>
-                    <div class="item-detail-wrapper">
-                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
-                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
-                    </div>
-                </div>
+                <%}%>
             </div>
         </section>
         <section class="content-section section--discountGoods">
@@ -50,15 +47,17 @@
                 <h2 class="header-ti">特价商品</h2><a href="/src/specials.html" class="more">查看更多</a>
             </div>
             <div class="section-wrapper clearfix" id="discountGoods">
-                <div class="section-item">
-                    <div class="item-img-wrapper">
-                        <img class="item-img" src="./imgs/timg.gif">
+                <%for (let item of discountedGoods.data) {%>
+                    <div class="section-item">
+                        <div class="item-img-wrapper">
+                            <img class="item-img" src="<%=item.bigImg%>">
+                        </div>
+                        <div class="item-detail-wrapper">
+                            <a href="/detail?<%=item.idGoods%>" class="item-link"><h3 class="item-ti"><%=item.name%></h3></a>
+                            <p class="item-price"><span class="price-sign">￥</span><strong class="price"><%=item.price%></strong></p>
+                        </div>
                     </div>
-                    <div class="item-detail-wrapper">
-                        <a href="#" class="item-link"><h3 class="item-ti">小黄人</h3></a>
-                        <p class="item-price"><span class="price-sign">￥</span><strong class="price">100</strong></p>
-                    </div>
-                </div>
+                <%}%>
             </div>
         </section>
     </main>
