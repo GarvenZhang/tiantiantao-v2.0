@@ -59,7 +59,6 @@ exports.get = async ctx => {
   // 查询
   await mysqlModule.queryConnection(sql)
     .then(result => {
-      console.log(sql)
       ctx.resbody = Cache.addBaseModel(result)
     })
     .catch(error => {

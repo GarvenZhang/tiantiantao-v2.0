@@ -28,7 +28,7 @@ function createGoodsItem (data, parent) {
     data.forEach((item) => {
       str += `<div class="section-item">
                 <div class="item-img-wrapper">
-                    <img class="item-img" src="/src/imgs/timg.gif">
+                    <img class="item-img" src="${item.bigImg}">
                 </div>
                 <div class="item-detail-wrapper">
                     <a href="${'/src/detail.html?id=' + item.id}" class="item-link"><h3 class="item-ti">${item.name}</h3></a>
